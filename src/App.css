@@ -1,0 +1,254 @@
+html{
+    scroll-behavior: smooth;
+    --bs-lighter:2px 2px 10px 2px rgb(0 0 0 / 10%);
+    --bg-gradient-overlay: linear-gradient(45deg, var(--tr-primary-overlay), var(--tr-accent-overlay));
+    --padding-fluid-lg: var(--space-sm) clamp(var(--space-sm), -0.875rem + 8.33vw, var(--space-xxlg));
+}
+
+/* Common CSS  */
+
+header, main, footer{
+    padding: 0 var(--space-xlg); /* Fallback value */
+    padding: var(--padding-fluid-lg);
+}
+
+body{
+    background: var(--tr-background);
+    overflow: hidden scroll;
+}
+
+section{
+    padding: var(--space-xlg) 0;
+}
+
+
+h2{
+    color: var(--tr-primary-color);
+}
+
+h3, h4, h5, h6{
+    color: var(--tr-text);
+}
+
+#productCardsContainer{
+    justify-items: center;
+}
+
+.tr-btn-cta {
+    color: var(--tr-primary-color);
+}
+
+/* Icons  */
+
+.tr-btn-icon i.fas{
+    font-weight: 500 ;
+}
+
+.icon-filled{
+    font-weight: 900;
+}
+
+
+/* Utilitties  */
+
+.logo{
+    width: clamp(12rem, 20vw, 20rem);
+}
+
+.stretch-x{
+    width: 100%;
+}
+
+.justify-i-center{
+    justify-items: center;
+}
+
+/* Cards  */
+
+.tr-card{
+    background-color: var(--tr-background);
+    box-shadow: var(--bs-lighter);
+    border: none;
+    align-self: start;
+}
+
+.tr-card .heart-icon{
+    position: absolute;
+    top: var(--space-xs);
+    right: var(--space-xs);
+}
+
+.tr-card-hor .heart-icon{
+    top: 0;
+    left: -2rem;
+    right: unset;
+}
+.tr-card .tr-ratings-badge{
+    align-self: start;
+    min-width: 50px;
+}
+
+
+.tr-card-hor .tr-card-footer-links{
+    margin-top: auto;
+}
+
+.tr-card-hor .tr-card-footer-links .tr-btn{
+    width: 100%;
+}
+
+.pdt-card{
+    border: none;
+    transition: all 0.3s ease-in-out;
+    align-self: stretch;
+    justify-content: space-around;
+    gap: var(--space-xs);
+}
+
+.pdt-card .title{
+    color: var(--tr-text);
+}
+
+.pdt-card .title:hover{
+    color: var(--tr-primary-color);
+}
+
+.pdt-card .tr-card-banner img{
+    object-fit: contain;
+}
+
+/* login/signup section  */
+
+.auth-form-container{
+    margin:auto;
+    width: 90%;
+    max-width: 50rem;
+}
+
+.auth-form-container .tr-card-banner img{
+    object-fit: contain;
+}
+
+.form-body,
+.form-toggle-btn
+{
+    flex: 1;
+}
+
+.auth-form{
+    display: none;
+}
+
+.auth-form.active{
+    display: flex;
+}
+
+.form-toggle-buttons .tr-btn{
+    flex: 1;
+}
+
+.form-toggle-buttons .tr-btn:nth-child(1){
+    border-radius: var(--space-xs) 0 0 var(--space-xs);
+}
+
+.form-toggle-buttons .tr-btn:nth-child(2){
+    border-radius: 0 var(--space-xs) var(--space-xs) 0;
+}
+
+
+/* Carts  */
+.cart-summary{
+    position: sticky;
+    top: 0;
+    max-width: 20rem;
+}
+
+/* Footer  */
+
+footer{
+    margin-top: var(--space-xlg);
+    padding: var(--space-xlg) clamp(var(--space-sm), -0.875rem + 8.33vw, var(--space-xxlg)) var(--space-xs);
+}
+
+.subscribe input{
+    border: none;
+    border-radius: var(--space-xs) 0 0 var(--space-xs);
+}
+
+.subscribe .tr-btn-cta{
+    border-radius: 0 var(--space-xs) var(--space-xs) 0;
+}
+
+.footer-links h3{
+    padding: 0 var(--space-sm);
+}
+
+
+
+@media screen and (max-width: 600px) {
+    :root{
+        font-size: 14px;
+    }
+    .hamburger{
+        display: block;
+    }
+    .tr-header{
+        overflow: hidden;
+        height: 4.5rem;
+        transition: height ease 0.3s;
+    }
+
+    .tr-header.active{
+        height: 13rem;
+        overflow: unset;
+    }
+
+    .tr-header.showOverflow{
+        overflow: unset;
+    }
+
+    .header-menu{
+        flex-direction: column;
+        order: 1;
+        gap: var(--space-sm);
+    }
+
+    .header-menu,
+    .header-menu .tr-input-wrapper,
+    .header-menu .tr-nav{
+        width: 100%;
+    }
+
+    .header-menu .tr-nav {
+        justify-content: center;
+    }
+
+    /* Authentication page  */
+
+    .auth-form-container{
+        flex-direction: column;
+    }
+
+    .auth-form-container .tr-card-banner{
+        max-width: 100%;
+    }
+
+    /* Footer section  */
+    footer .d-grid{
+        gap: var(--space-md);
+    }
+
+    footer .brand-info,
+    footer .subscribe
+    {
+        text-align: center;
+    }
+
+    footer .logo{
+        margin: auto;
+    }
+
+    footer .author-info{
+        margin-top: var(--space-lg);
+    }
+}
