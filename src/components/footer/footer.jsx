@@ -4,7 +4,7 @@ export const Footer = () =>{
         <footer className="bg-primary">
             <div className="d-grid grid-autofit-md">
                 <div className="flex-col brand-info">
-                    <Link href='/' className='logo'>
+                    <Link to='/' className='logo'>
                         <img src='/assets/crickstock-logo.png' alt = "Crickstock logo"/>
                     </Link>
                     <div className="txt-white">
@@ -35,13 +35,13 @@ export const Footer = () =>{
                     </ul>
                     <ul className="footer-links flex-col">
                         <h3 className="txt-white txt-left">Products</h3>
-                        <Link to="/products" className="tr-btn tr-btn-link">Cricket Bats
+                        <Link to="/products/Bats" className="tr-btn tr-btn-link">Cricket Bats
                         </Link>
-                        <Link to="/products" className="tr-btn tr-btn-link">Cricket Balls
+                        <Link to="/products/Balls" className="tr-btn tr-btn-link">Cricket Balls
                         </Link>
-                        <Link to="/products" className="tr-btn tr-btn-link">Cricket Shoes
+                        <Link to="/products/Shoes" className="tr-btn tr-btn-link">Cricket Shoes
                         </Link>
-                        <Link to="/products" className="tr-btn tr-btn-link">Cricket Gears
+                        <Link to="/products/Gears" className="tr-btn tr-btn-link">Cricket Gears
                         </Link>
                     </ul>
                 </div>
