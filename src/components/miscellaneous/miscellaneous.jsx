@@ -1,1 +1,3 @@
-export const Badge = ({badgeCount}) => <div className={`${styles.badge} badge badge-red`}>{badgeCount}</div>
+export function Badge({badgeCount}){
+    return <div className={`${styles.badge} badge badge-red`}>{badgeCount}</div>
+}

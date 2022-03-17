@@ -1,0 +1,82 @@
+
+main{
+    padding: 0;
+}
+
+section{
+    padding: var(--padding-fluid-lg);
+}
+
+.hero{
+    position: relative;
+    height: 80vh;
+    background-image: var(--bg-gradient-overlay);
+    background-size: cover;
+    background-attachment: fixed;
+}
+/* 
+.hero::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--tr-gray-overlay);
+    background-image: var(--bg-gradient-overlay);
+}
+
+.hero >*{
+    position: relative;
+    z-index: 1;
+} */
+
+.heroHeading{
+    font-size: clamp(2rem, 10vw - 1rem, 3rem);
+    color: var(--tr-background);
+    max-width: 30ch;
+}
+
+.cta{
+    font-size: 1.2rem;
+
+}
+
+.categoriesTextOverlay{
+    background-color: var(--tr-accent-overlay);
+    background-image: var(--bg-gradient-overlay);
+    backdrop-filter: blur(1px);
+}
+
+.categoriesTextOverlay:hover{
+    backdrop-filter: blur(0px);
+}
+
+.categoriesTextOverlay h2{
+    background-color: transparent;
+    color: var(--tr-white);
+    font-size: var(--fs-lg);
+}
+
+.categoriesCard{
+    padding: 0;
+    overflow: hidden;
+    align-self: stretch;
+}
+
+.categoryCardsContainer{
+    justify-items: center;
+}
+
+.categoriesCard img{
+    transition: all ease 0.3s;
+}
+
+.categoriesCard:hover img{
+    transform: scale(1.2);
+    transition: all ease 0.3s;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 500px){
+    #productCardsContainer{
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    }
+}

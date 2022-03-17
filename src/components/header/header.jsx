@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from '../miscellaneous/miscellaneous';
 
-export const Header = ({ userIsLoggedIn })=>{
+export function Header({ userIsLoggedIn }){
     const [ showPageMenu, setShowPageMenu ] = useState(false);
     const cartItems = []; // will be replaced by cart context later
     const wishlistItems = []; // will be replaced by wishlist context later
