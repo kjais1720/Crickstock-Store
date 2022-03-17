@@ -1,5 +1,5 @@
-export { HomePage } from "./home-page/home-page";
-export { CartPage } from "./cart-page/cart-page";
-export { ProductsPage } from "./products-page/products-page";
-export { AuthPage } from "./auth-page/auth-page"
-export { WishlistPage } from "./wishlisht-page/wishlist-page"
+export { Home } from "./home/home";
+export { Cart } from "./cart/cart";
+export { Products } from "./products/products";
+export { Auth } from "./auth/auth"
+export { Wishlist } from "./wishlisht/wishlist"

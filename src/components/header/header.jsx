@@ -1,8 +1,7 @@
 import styles from './header.module.css';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-export const Badge = ({badgeCount}) => <div className={`${styles.badge} badge badge-red`}>{badgeCount}</div>
+import { Badge } from '../miscellaneous/miscellaneous';
 
 export const Header = ({ userIsLoggedIn })=>{
     const [ showPageMenu, setShowPageMenu ] = useState(false);
@@ -26,8 +25,6 @@ export const Header = ({ userIsLoggedIn })=>{
                 <nav className="tr-nav d-flex gap-md">
                     <div className={styles.pageMenuWrapper}>
                         <button
-                            // onFocus={()=>setShowPageMenu(true)}
-                            // onBlur={()=>setShowPageMenu(false)}
                             onClick={()=>setShowPageMenu(prev=>!prev)}
                             className="page-menu-btn tr-btn tr-btn-link d-flex align-i-center gap-sm"
                         >   

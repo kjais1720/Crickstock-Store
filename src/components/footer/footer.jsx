@@ -4,9 +4,9 @@ export const Footer = () =>{
         <footer className="bg-primary">
             <div className="d-grid grid-autofit-md">
                 <div className="flex-col brand-info">
-                    <a href='/' className='logo'>
+                    <Link href='/' className='logo'>
                         <img src='/assets/crickstock-logo.png' alt = "Crickstock logo"/>
-                    </a>
+                    </Link>
                     <div className="txt-white">
                         <i className="fas fa-map-marker-alt"></i>
                         123 - Maple street, Anytown, CA 171001

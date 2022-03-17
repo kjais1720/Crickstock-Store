@@ -1,0 +1,1 @@
+export const Badge = ({badgeCount}) => <div className={`${styles.badge} badge badge-red`}>{badgeCount}</div>
