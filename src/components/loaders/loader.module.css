@@ -9,7 +9,6 @@
 	height:49px;
 	margin: auto;
 }
-
 .loaderCircle {
 	display: inline-block;
 	vertical-align: middle;
@@ -20,21 +19,15 @@
 	border-radius: 49px;
 	animation: bubblingG 1.5s infinite alternate;
 }
-
 .loaderCircle1 {
 	animation-delay: 0s;
 }
-
 .loaderCircle2 {
 	animation-delay: 0.45s;
 }
-
 .loaderCircle3 {
 	animation-delay: 0.9s;
 }
-
-
-
 @keyframes bubblingG {
 	0% {
 		width: 10px;

@@ -14,19 +14,6 @@ section{
     background-size: cover;
     background-attachment: fixed;
 }
-/* 
-.hero::before{
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: var(--tr-gray-overlay);
-    background-image: var(--bg-gradient-overlay);
-}
-
-.hero >*{
-    position: relative;
-    z-index: 1;
-} */
 
 .heroHeading{
     font-size: clamp(2rem, 10vw - 1rem, 3rem);
