@@ -5,5 +5,3 @@ export function Badge({badgeCount}){
 export function ProductBadge({badgeText}){
     return (<div class="tr-card-badge">{badgeText}</div>)
 }
-
-export const 

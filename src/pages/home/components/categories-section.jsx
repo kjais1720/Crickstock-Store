@@ -5,8 +5,8 @@ import {useState} from 'react'
 import { LoaderForComponent } from '../../../components';
 export const Categories = ({styles}) => {
     const [apiUrl, setApiUrl] = useState("/api/categories");
-    const {serverData : {categories}, isLoading} = useAxios(apiUrl);
-
+    const {serverResponse, isLoading} = useAxios(apiUrl);
+    const categories = serverResponse.data?.categories || [];
     return (
         <section>
             <h2 className="txt-center mr-y-lg">Categories</h2>

@@ -10,7 +10,7 @@ export const useProduct = () => useContext(productsContext);
 export const ProductProvider = ({children}) => {
     const [apiUrl, setApiUrl ] = useState("/api/products");
     const [productsState, productsDispatch] = useReducer(productsReducer,{productsList:[]});
-    const { serverResponse, setServerResponse,  isLoading, serverError } = useAxios(apiUrl);
+    const { serverResponse, isLoading, serverError } = useAxios(apiUrl);
     const {userState} = useAuth();
     const productsFromServer = serverResponse.data?.products || [];
     

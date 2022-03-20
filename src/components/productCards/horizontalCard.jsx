@@ -21,21 +21,21 @@ export function HorizontalProductCard({ product, isCartCard }){
         <article className="pdt-card tr-card tr-card-hor d-flex">
             {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
             <div className="tr-card-banner">
-            <img 
-                src={imgSrc}
-                onError={({ currentTarget }) => { // Fallback image if the image link breaks in future
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src=`/assets/${categoryName}-Category.webp`;
-                }}
-                alt={name}
-            />
+                <img 
+                    src={imgSrc}
+                    onError={({ currentTarget }) => { // Fallback image if the image link breaks in future
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src=`/assets/${categoryName}-Category.webp`;
+                    }}
+                    alt={name}
+                />
             </div>
             <div className="flex-col justify-c-start p-rel">
                 <button className="heart-icon tr-btn tr-btn-icon">
                     <i className={`fas fa-heart ${addedToWishlist ? 'icon-filled' : ''}`}></i>
                 </button>
                 <div className="tr-card-header">
-                    <Link href='/product-info/productId' className="title txt-semibold">{name}</Link>
+                    <Link to='/product-info/productId' className="title txt-semibold">{name}</Link>
                     <h3 className="subtitle">{brand}</h3>
                 </div>
                 <div className="d-flex align-i-center gap-xs">
