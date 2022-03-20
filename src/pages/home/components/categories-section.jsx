@@ -1,8 +1,8 @@
-
 import { Link } from 'react-router-dom';
-import { useAxios } from '../../../utilities';
+import { useAxios } from 'utilities';
 import {useState} from 'react'
-import { LoaderForComponent } from '../../../components';
+import { LoaderForComponent } from 'components';
+
 export const Categories = ({styles}) => {
     const [apiUrl, setApiUrl] = useState("/api/categories");
     const {serverResponse, isLoading} = useAxios(apiUrl);

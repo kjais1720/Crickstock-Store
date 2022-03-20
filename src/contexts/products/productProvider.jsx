@@ -1,7 +1,7 @@
 import { useState, createContext, useContext, useReducer, useEffect  } from "react";
-import { useAxios } from '../../utilities';
+import { useAxios } from 'utilities';
 import { productsReducer } from "./reducer";
-import { useAuth } from "../index";
+import { useAuth } from "contexts";
 
 const productsContext = createContext({productsState:{productsList:[]}});
 

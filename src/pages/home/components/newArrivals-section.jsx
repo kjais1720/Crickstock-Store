@@ -1,5 +1,5 @@
-import { useProduct } from "../../../contexts";
-import { HorizontalProductCard } from "../../../components";
+import { useProduct } from "contexts";
+import { HorizontalProductCard } from "components";
 
 export function NewArrivals(){
     const { productsList, isLoading } = useProduct();
