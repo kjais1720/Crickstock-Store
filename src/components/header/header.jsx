@@ -23,7 +23,11 @@ export function Header({ userIsLoggedIn }){
                     </button>
                 </div>
                 <nav className="tr-nav d-flex gap-md">
-                    <div className={styles.pageMenuWrapper}>
+                    <div 
+                        className={styles.pageMenuWrapper}
+                        onMouseEnter={()=>setShowPageMenu(true)}
+                        onMouseLeave={()=>setShowPageMenu(false)}
+                    >
                         <button
                             onClick={()=>setShowPageMenu(prev=>!prev)}
                             className="page-menu-btn tr-btn tr-btn-link d-flex align-i-center gap-sm"

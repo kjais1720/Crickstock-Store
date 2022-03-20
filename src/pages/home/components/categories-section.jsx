@@ -1,11 +1,11 @@
 
 import { Link } from 'react-router-dom';
-import { UseAxios } from '../../../utilities';
+import { useAxios } from '../../../utilities';
 import {useState} from 'react'
 import { LoaderForComponent } from '../../../components';
 export const Categories = ({styles}) => {
     const [apiUrl, setApiUrl] = useState("/api/categories");
-    const {serverData : {categories}, isLoading} = UseAxios(apiUrl);
+    const {serverData : {categories}, isLoading} = useAxios(apiUrl);
 
     return (
         <section>

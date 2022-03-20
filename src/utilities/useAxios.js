@@ -9,7 +9,7 @@ import axios from 'axios';
  * @param apiUrl : api url string 
  * @returns {isLoading : loading state, data : data from server, serverError : Error from server, setData : changing the state of data }
  */
-export const UseAxios = (apiUrl) => {
+export const useAxios = (apiUrl) => {
     const [isLoading, setIsLoading] = useState(false);
     const [serverData, setServerData] = useState({});
     const [serverError, setServerError] = useState(null);
