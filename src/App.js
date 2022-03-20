@@ -6,8 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import { Header, Footer } from "./components";
-import { Home, Products, Cart, Auth, Wishlist } from "./pages";
+import { Header, Footer } from "components";
+import { Home, Products, Cart, Auth, Wishlist } from "pages";
 
 function App() {
   return (
