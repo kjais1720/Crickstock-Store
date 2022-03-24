@@ -1,51 +1,80 @@
 import {
     useEffect,
-    useState
+    useReducer
 } from "react";
 import axios from 'axios';
 
+const apiReducer = (state, {type,payload}) => {
+    switch(type){
+        case "setData":
+            return {...state,serverResponse:payload, serverError:{}}
+        case "setError":
+            return {...state,serverError: payload, serverResponse:{}}
+        case "setLoadingTrue":
+            return {...state, isLoading:true};
+        case "setLoadingFalse":
+            return {...state,isLoading:false}
+        default:
+            return state;
+    }
+}
+
 /**
- * 
- * @param {string} apiUrl - The Api url
- * @param {string} method - The HTTP request method (default value = "get")
- * @param {object} postData - The data required make the post request to the server
- * @returns {object} 
- * It returns {isLoading : loading state, data : data from server, serverError : Error from server, setData : changing the state of data }
+ * @param apiUrl : api url string 
+ * @returns {isLoading : loading state, data : data from server, serverError : Error from server, setData : changing the state of data }
  */
-export const useAxios = (apiUrl, method = "get", postData) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [serverResponse, setServerResponse] = useState({});
-    const [serverError, setServerError] = useState(null);
+export const useAxios = (apiUrl, method = "get", postData, authToken) => {
+    const [ apiState, apiDispatch ] = useReducer(apiReducer,{
+        serverResponse:{},
+        serverError:{},
+        isLoading:false
+    })
     const getData = async () => {
+        console.log("axios called")
         try {
-            setIsLoading(true);
+            apiDispatch({type:"setLoadingTrue"});
             let res;
             switch (method){
                 case "get":
-                    res = await axios.get(apiUrl);
+                    res = await axios.get(apiUrl,{
+                        headers : 
+                        {
+                            authorization: authToken
+                        }
+                    })
                     break;
                 case "post":
-                    console.log("called")
-                    res = await axios.post(apiUrl, postData)
-                    console.log(res)
+                    res = await axios.post(apiUrl, postData,{
+                        headers:{
+                            authorization:authToken
+                        }
+                    })
                     break;
+                case "delete":
+                    res = await axios.delete(apiUrl,{
+                        headers:{
+                            authorization:authToken
+                        }
+                    });
                 default:
                     break;
             }
-            setServerResponse(res);
+            console.log(res)
+            apiDispatch({type:"setData",payload:res});
         } catch (err) {
-            setServerError(err);
+            apiDispatch({type:"setError",payload:err});
         } finally {
-            setIsLoading(false);
+            apiDispatch({type:"setLoadingFalse"});
         }
     }
     useEffect(() => {
-        getData()
+        if(apiUrl){
+            getData()
+        }
     }, [apiUrl,postData]);
     return {
-        isLoading,
-        serverResponse,
-        serverError,
-        setServerResponse
+        isLoading:apiState.isLoading,
+        serverResponse:apiState.serverResponse,
+        serverError:apiState.serverError
     };
 }

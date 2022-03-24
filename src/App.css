@@ -3,6 +3,8 @@ html{
     --bs-lighter:2px 2px 10px 2px rgb(0 0 0 / 10%);
     --bg-gradient-overlay: linear-gradient(45deg, var(--tr-primary-overlay), var(--tr-accent-overlay));
     --padding-fluid-lg: var(--space-sm) clamp(var(--space-sm), -0.875rem + 8.33vw, var(--space-xxlg));
+    --tr-disabled-color: hsl(233, 18%, 80%);
+
 }
 
 /* Common CSS  */
@@ -44,7 +46,7 @@ h3, h4, h5, h6{
     font-weight: 500 ;
 }
 
-.icon-filled{
+.tr-btn-icon i.icon-filled{
     font-weight: 900;
 }
 
@@ -62,6 +64,24 @@ h3, h4, h5, h6{
 .justify-i-center{
     justify-items: center;
 }
+
+.disabledButton{
+    cursor: not-allowed;
+}
+
+.show-password-btn{
+    right: var(--space-xlg);
+}
+
+.show-password-btn::before{
+    display: none;
+}
+
+.tr-snackbar {
+    position: fixed;
+    right: 50px;
+}
+
 
 /* Cards  */
 
@@ -120,27 +140,20 @@ h3, h4, h5, h6{
 /* login/signup section  */
 
 .auth-form-container{
-    margin:auto;
+    margin: var(--space-xxlg) auto 10rem;
     width: 90%;
     max-width: 50rem;
+
 }
 
 .auth-form-container .tr-card-banner img{
     object-fit: contain;
 }
 
-.form-body,
-.form-toggle-btn
+.form-body
 {
     flex: 1;
-}
-
-.auth-form{
-    display: none;
-}
-
-.auth-form.active{
-    display: flex;
+    max-width: 400px;
 }
 
 .form-toggle-buttons .tr-btn{
@@ -155,6 +168,13 @@ h3, h4, h5, h6{
     border-radius: 0 var(--space-xs) var(--space-xs) 0;
 }
 
+.tr-input-item{
+    padding-right: var(--space-xxlg) ;
+}
+
+.show-password-btn{
+    right: var(--space-sm);
+}
 
 /* Carts  */
 .cart-summary{

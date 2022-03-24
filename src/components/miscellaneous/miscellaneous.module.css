@@ -1,0 +1,35 @@
+.pageMenuWrapper{
+    position: relative;
+}
+
+.pageMenu{
+    position: absolute;
+    top: 50px;
+    left: -10px;
+    align-items: center;
+    z-index: 100;
+    background-color: var(--tr-accent-color);
+    background-color: var(--tr-background);
+    box-shadow: var(--bs-lighter);
+    border-radius: var(--space-xs);
+    height: 0;
+    overflow: hidden;
+    transition: all ease 0.5s;
+    width: 10rem;
+}
+
+.activeMenu{
+    padding: var(--space-lg) var(--space-xs);
+    height: 12.5rem;
+}
+
+.pageMenu a{
+    color: var(--tr-primary-color);
+    background-color: transparent;
+    font-weight: 500;
+}
+
+.pageMenu a:hover,
+.pageMenu a:focus{
+    color: var(--tr-accent-color);
+}
