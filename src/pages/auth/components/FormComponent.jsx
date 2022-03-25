@@ -4,6 +4,7 @@ import { useAxios } from "utilities";
 import { useAuth } from "contexts";
 import { ButtonLoader } from "components";
 import { formFields, validateInput, isFormValid } from "../utilities";
+import { useNavigate } from "react-router-dom";
 
 /**
  *
@@ -26,6 +27,8 @@ export function FormComponent({ formType }) {
     email: "adarshbalika@gmail.com",
     password: "adarshBalika@123",
   };
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(defaultFormState);
   const [formError, setFormError] = useState(defaultError);
@@ -51,27 +54,32 @@ export function FormComponent({ formType }) {
       });
       setFormData({ ...defaultFormState });
       setFormError({ ...defaultError });
+      navigate("/");
     } else if (serverError.response?.status === 422) {
       setFormError((prev) => ({ ...prev, email: "This email already exists" }));
+    } else if (serverError.response?.status === 401){
+      setFormError(prev=>({...prev, password:"invalid password"}))
+    } else if (serverError.response?.status === 404){
+      setFormError(prev=>({...prev, email:"Email doesn't exists"}))
     }
   }, [serverResponse, serverError]);
 
   const inputHandler = (e) => {
     e.preventDefault();
-    const {name, value, required} = e.target;
+    const { name, value, required } = e.target;
     const error = validateInput(name, value, formData, required);
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     setFormError((prevError) => ({ ...prevError, [name]: error }));
   };
 
-  const formSubmitHandler = async (e, route) => {
+  const formSubmitHandler = async (e, route, data) => {
     e.preventDefault();
     let requiredPostData = {
-      email: formData.email,
-      password: formData.password,
+      email: data.email,
+      password: data.password,
     };
     if (route === "/api/auth/signup") {
-      requiredPostData = {...requiredPostData, ...formData}
+      requiredPostData = { ...requiredPostData, ...data };
     }
     setApiUrl(route);
     setDataToPost(requiredPostData);
@@ -114,11 +122,18 @@ export function FormComponent({ formType }) {
         } tr-btn tr-btn-cta stretch-x`}
         type="submit"
         disabled={!disableSubmit}
-        onClick={(e) => formSubmitHandler(e, "/api/auth/login")}
+        onClick={(e) => formSubmitHandler(e, "/api/auth/login", formData)}
       >
         {isLoading ? <ButtonLoader /> : "Login"}
       </button>
-      <button className="tr-btn tr-btn-outline-primary stretch-x">Guest Login</button>
+      <button
+        className="tr-btn tr-btn-outline-primary stretch-x"
+        onClick={(e) =>
+          formSubmitHandler(e, "/api/auth/login", guestCredentials)
+        }
+      >
+        Guest Login
+      </button>
     </form>
   ) : (
     <form
@@ -153,7 +168,7 @@ export function FormComponent({ formType }) {
         } tr-btn tr-btn-cta stretch-x`}
         type="submit"
         disabled={!disableSubmit}
-        onClick={(e) => formSubmitHandler(e, "/api/auth/signup")}
+        onClick={(e) => formSubmitHandler(e, "/api/auth/signup", formData)}
       >
         {isLoading ? <ButtonLoader /> : "Signup"}
       </button>

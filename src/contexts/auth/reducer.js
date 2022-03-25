@@ -5,7 +5,6 @@
  * @returns {object} state : modified state
  */
  export const authReducer = (state, {type,payload}) => {
-    console.log({payload})
     switch (type){
         case "login":
             return {...state, isUserAuthenticated:true, user : {...payload.user}, encodedToken : payload.encodedToken}

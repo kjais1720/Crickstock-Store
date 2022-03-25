@@ -1,16 +1,17 @@
-html{
-    scroll-behavior: smooth;
+:root{
     --bs-lighter:2px 2px 10px 2px rgb(0 0 0 / 10%);
     --bg-gradient-overlay: linear-gradient(45deg, var(--tr-primary-overlay), var(--tr-accent-overlay));
-    --padding-fluid-lg: var(--space-sm) clamp(var(--space-sm), -0.875rem + 8.33vw, var(--space-xxlg));
+    --padding-fluid-lg: var(--space-sm) clamp(var(--space-sm), calc(-0.875rem + 8.33vw), var(--space-xxlg));
     --tr-disabled-color: hsl(233, 18%, 80%);
-
+}
+ 
+html{
+    scroll-behavior: smooth;
 }
 
-/* Common CSS  */
 
 header, main, footer{
-    padding: 0 var(--space-xlg); /* Fallback value */
+    padding: 0 var(--space-xlg);
     padding: var(--padding-fluid-lg);
 }
 
@@ -40,7 +41,6 @@ h3, h4, h5, h6{
     color: var(--tr-primary-color);
 }
 
-/* Icons  */
 
 .tr-btn-icon i.fas{
     font-weight: 500 ;
@@ -50,8 +50,6 @@ h3, h4, h5, h6{
     font-weight: 900;
 }
 
-
-/* Utilitties  */
 
 .logo{
     width: clamp(12rem, 20vw, 20rem);
@@ -83,7 +81,6 @@ h3, h4, h5, h6{
 }
 
 
-/* Cards  */
 
 .tr-card{
     background-color: var(--tr-background);
@@ -137,7 +134,6 @@ h3, h4, h5, h6{
     object-fit: contain;
 }
 
-/* login/signup section  */
 
 .auth-form-container{
     margin: var(--space-xxlg) auto 10rem;
@@ -176,18 +172,16 @@ h3, h4, h5, h6{
     right: var(--space-sm);
 }
 
-/* Carts  */
 .cart-summary{
     position: sticky;
     top: 0;
     max-width: 20rem;
 }
 
-/* Footer  */
 
 footer{
     margin-top: var(--space-xlg);
-    padding: var(--space-xlg) clamp(var(--space-sm), -0.875rem + 8.33vw, var(--space-xxlg)) var(--space-xs);
+    padding: var(--space-xlg) clamp(var(--space-sm), calc(-0.875rem + 8.33vw), var(--space-xxlg)) var(--space-xs);
 }
 
 .subscribe input{
@@ -243,7 +237,6 @@ footer{
         justify-content: center;
     }
 
-    /* Authentication page  */
 
     .auth-form-container{
         flex-direction: column;
@@ -253,7 +246,6 @@ footer{
         max-width: 100%;
     }
 
-    /* Footer section  */
     footer .d-grid{
         gap: var(--space-md);
     }

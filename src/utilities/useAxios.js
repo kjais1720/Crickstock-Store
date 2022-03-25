@@ -30,7 +30,6 @@ export const useAxios = (apiUrl, method = "get", postData, authToken) => {
         isLoading:false
     })
     const getData = async () => {
-        console.log("axios called")
         try {
             apiDispatch({type:"setLoadingTrue"});
             let res;
@@ -59,7 +58,6 @@ export const useAxios = (apiUrl, method = "get", postData, authToken) => {
                 default:
                     break;
             }
-            console.log(res)
             apiDispatch({type:"setData",payload:res});
         } catch (err) {
             apiDispatch({type:"setError",payload:err});
