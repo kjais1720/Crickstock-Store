@@ -1,11 +1,10 @@
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
-import { useAuth } from "contexts";
+import { useAuth, useCartWishlist } from "contexts";
 import { Badge, DropdownMenu } from "components/miscellaneous/miscellaneous";
 
 export const Header = () => {
-  const cartItems = []; // will be replaced by cart context later
-  const wishlistItems = []; // will be replaced by wishlist context later
+  const { cartItems, wishlistItems } = useCartWishlist();
   const {
     userState: { isUserAuthenticated, user },
     userDispatch,

@@ -1,3 +1,8 @@
+.badge{
+    border-color: var(--tr-primary-color);
+}
+
+/* Dropdown Menu  */
 .pageMenuWrapper{
     position: relative;
 }

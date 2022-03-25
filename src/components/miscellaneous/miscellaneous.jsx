@@ -7,7 +7,7 @@ export function Badge({ badgeCount }) {
 }
 
 export function ProductBadge({ badgeText }) {
-  return <div class="tr-card-badge">{badgeText}</div>;
+  return <div className="tr-card-badge">{badgeText}</div>;
 }
 
 export function DropdownMenu({ links, menuTitle }){
@@ -29,7 +29,7 @@ export function DropdownMenu({ links, menuTitle }){
       >
         {links.map((link, idx) =>
           link.name === "Logout" ? (
-            <button className = "tr-btn tr-btn-transparent" onClick={() => link.clickHandler({ type: "logout" })}>
+            <button key={idx} className = "tr-btn tr-btn-error txt-primary bg-transparent" onClick={() => link.clickHandler({ type: "logout" })}>
               Logout
             </button>
           ) : (
