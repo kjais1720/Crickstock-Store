@@ -14,24 +14,24 @@ export const ProductProvider = ({children}) => {
     const {userState} = useAuth();
     const productsFromServer = serverResponse.data?.products || [];
     
-    useEffect(()=>{ // To add the 'addedToCart' and 'addedToWishlist' properties to the products state
-        let updatedProductsList = [];
-        const {cart, wishlist} = userState.user;
-        if(userState.isUserAuthenticated){
-            updatedProductsList = productsFromServer.map(
-                product=> {
-                    return {
-                        ...product,
-                        addedToCart: cart.find(item=>item.id === product.id) ? true : false ,
-                        addedToWishlist: wishlist.find(item=> item.id === product.id ) ? true : false
-                    };
-                }
-            )
-        } else {
-            updatedProductsList = [...productsFromServer]
-        }
-        productsDispatch({type:"updateProductsList",payload:updatedProductsList})
-    },[userState])  
+    // useEffect(()=>{ // To add the 'addedToCart' and 'addedToWishlist' properties to the products state
+    //     let updatedProductsList = [];
+    //     const {cart, wishlist} = userState.user;
+    //     if(userState.isUserAuthenticated){
+    //         updatedProductsList = productsFromServer.map(
+    //             product=> {
+    //                 return {
+    //                     ...product,
+    //                     addedToCart: cart.find(item=>item.id === product.id) ? true : false ,
+    //                     addedToWishlist: wishlist.find(item=> item.id === product.id ) ? true : false
+    //                 };
+    //             }
+    //         )
+    //     } else {
+    //         updatedProductsList = [...productsFromServer]
+    //     }
+    //     productsDispatch({type:"updateProductsList",payload:updatedProductsList})
+    // },[userState])  
 
     useEffect(()=>{
         const updatedData = serverResponse.data?.products || [];
