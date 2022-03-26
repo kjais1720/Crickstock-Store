@@ -32,7 +32,6 @@ export const useAxios = (apiUrl, method = "get", postData, authToken) => {
     const getData = async () => {
         try {
             apiDispatch({type:"setLoadingTrue"});
-            console.log('called')
             let res;
             switch (method){
                 case "get":

@@ -38,7 +38,6 @@ export const CartWishlistProvider = ({ children }) => {
     encodedToken
     );
   useEffect(() => {
-    console.log(serverResponse)
     // To update the cart and wishlist state everytime the app gets new data from the server
     if(serverResponse.data?.cart){
       const cart = serverResponse.data?.cart || [];
@@ -57,7 +56,6 @@ export const CartWishlistProvider = ({ children }) => {
       setwishlistItems([]);
     }
     else {
-      console.log({isUserAuthenticated})
       cartWishlistDispatch({ type: "getCartList" });
       timeoutId = setTimeout(()=>{ // To get the wishlist after the cart list is fetched from the server and stored in the local state
         cartWishlistDispatch({type:"getWishlist"})
