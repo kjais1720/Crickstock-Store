@@ -43,6 +43,7 @@
 .snackbar {
     position: fixed;
     bottom: 50px;
+    z-index: 100;
 }
 
 .bottomBorder{
