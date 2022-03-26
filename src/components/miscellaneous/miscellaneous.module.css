@@ -38,3 +38,18 @@
 .pageMenu a:focus{
     color: var(--tr-accent-color);
 }
+
+/* Snackbar  */
+.snackbar {
+    position: fixed;
+    bottom: 50px;
+}
+
+.bottomBorder{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-radius: 0 0 var(--space-xs) var(--space-xs);
+    height: 5px;
+    transition: width ease 0.3s;
+}
