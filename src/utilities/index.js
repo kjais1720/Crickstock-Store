@@ -1,3 +1,2 @@
-import { useAxios } from "./useAxios";
-
-export { useAxios }
+export { useAxios } from "./useAxios";
+export { useTimer } from "./useTimer";

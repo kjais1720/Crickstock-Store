@@ -5,10 +5,6 @@
     padding: var(--space-sm) var(--space-xlg) var(--space-sm) var(--space-lg);
 }
 
-.badge{
-    border-color: var(--tr-primary-color);
-}
-
 .headerBrand{
     flex-basis: 300px;
 }

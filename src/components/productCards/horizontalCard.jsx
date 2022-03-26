@@ -1,54 +1,111 @@
-import { ProductBadge } from "..";
-import { getRatingsColor, calculateDiscount } from "./utilities";
-import { Link } from "react-router-dom";
-
-export function HorizontalProductCard({ product, isCartCard }) {
+import { useState } from "react";
+import { ProductBadge, Snackbar } from "components";
+import { getRatingsColor, calculateDiscount, getCartButton, CartButton } from "./utilities";
+import { useAuth, useCartWishlist } from "contexts";
+export function HorizontalProductCard({ product, isCartCard }){
   const {
-    _id,
+    _id: id,
     imgSrc,
     name,
     brand,
     badgeText,
-    categoryName,
     ratings,
     price,
     prevPrice,
-    addedToCart,
-    addedToWishlist,
   } = product;
+  const {userState:{isUserAuthenticated}} = useAuth();
+  const { cartItems, wishlistItems, cartWishlistDispatch } = useCartWishlist();
+  const [snackbarProps, setSnackbarProps ] = useState({
+    showSnackbar:false,
+    snackbarText:"",
+    actionBtn:{
+      linkPath: "",
+      btnType: "",
+      btnText: "",
+      clickHandler:null
+    }
+  })
+  const setShowSnackbar = bool => {
+    setSnackbarProps(prev => ({...prev,showSnackbar:bool}))
+  } 
+  const {showSnackbar, snackbarText, actionBtn} = snackbarProps;
+
+  const itemInCart = cartItems.find((item) => item._id === id);
+  const itemInWishlist = wishlistItems.find((item) => item._id === id);
+  const addedToCart = itemInCart ? true : false;
+  const addedToWishlist = itemInWishlist ? true : false;
+  
+  const cartClickHandler = () => {
+    if (isUserAuthenticated){
+      cartWishlistDispatch({ type: "addItemToCart", payload: product });
+    } else setSnackbarProps(prev=>({
+      ...prev,
+      showSnackbar:true,
+      snackbarText:"Please Login to add the item to cart!",
+      actionBtn:{
+        linkPath: "/auth",
+        btnType: "link",
+        btnText: "Login", 
+      } 
+    }));
+  };
+
+  const wishlistClickHandler = () => {
+    if (isUserAuthenticated) {
+        cartWishlistDispatch({ type: "addToWishlist", payload: product });
+    } else setSnackbarProps(prev=>({
+      ...prev,
+      showSnackbar:true,
+      snackbarText:"Please Login to add the item to cart!",
+      actionBtn:{
+        linkPath: "/auth",
+        btnType: "link",
+        btnText: "Login", 
+      } 
+    }));
+  };
+  const quantityBtnClickHandler = (product, action) => {
+    switch (action) {
+      case "increment":
+        cartWishlistDispatch({
+          type: "changeItemQuantity",
+          payload: { id, action: "decrement" },
+        });
+        break;
+      case "decrement":
+        if (product.qty > 1) {
+          cartWishlistDispatch({
+            type: "changeItemQuantity",
+            payload: { id, action: "decrement" },
+          });
+        } else {
+          cartWishlistDispatch({
+            type: "deleteItemFromCart",
+            payload: product._id,
+          });
+        }
+        break;
+    }
+  };
 
   return (
     <article className="pdt-card tr-card tr-card-hor d-flex">
-      {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
+      {badgeText ? <ProductBadge badgeText={badgeText}/> : ""}
       <div className="tr-card-banner">
-        <img
-          src={imgSrc}
-          onError={({ currentTarget }) => {
-            // Fallback image if the image link breaks in future
-            currentTarget.onerror = null; // prevents looping
-            currentTarget.src = `/assets/${categoryName}-Category.webp`;
-          }}
-          alt={name}
-        />
+        <img src={imgSrc} alt={name} />
       </div>
       <div className="flex-col justify-c-start p-rel">
         <button className="heart-icon tr-btn tr-btn-icon">
-          <i
-            className={`fas fa-heart ${addedToWishlist ? "icon-filled" : ""}`}
-          ></i>
+          <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
         </button>
         <div className="tr-card-header">
-          <Link to="/product-info/productId" className="title txt-semibold">
+          <a href="../product-info/productId" className="title txt-semibold">
             {name}
-          </Link>
+          </a>
           <h3 className="subtitle">{brand}</h3>
         </div>
         <div className="d-flex align-i-center gap-xs">
-          <div
-            className={`tr-ratings-badge txt-left ratings-sm tr-ratings-badge-${getRatingsColor(
-              ratings
-            )}`}
-          >
+          <div className="tr-ratings-badge txt-left ratings-sm tr-ratings-badge-green">
             <i className="fas fa-star"></i>
             <span>{ratings}</span>
           </div>
@@ -69,30 +126,52 @@ export function HorizontalProductCard({ product, isCartCard }) {
               <button
                 style={{
                   border: "none",
-                  cursor: product.quantity >= 3 ? "not-allowed" : "pointer",
+                  cursor: itemInCart.qty >= 3 ? "not-allowed" : "pointer",
                 }}
-                disabled={product.quantity >= 3}
+                disabled={itemInCart.qty >= 3}
                 className="align-s-center txt-primary fas fa-plus"
+                onClick={() => quantityBtnClickHandler(product, "increment")}
               ></button>
-              <div className="pd-x-sm">{product.quantity}</div>
+              <div className="pd-x-sm">{itemInCart.qty}</div>
               <button
                 style={{ border: "none" }}
                 className="align-s-center txt-primary fas fa-minus"
-                disabled={product.quantity <= 0}
+                onClick={() => quantityBtnClickHandler(product, "decrement")}
               ></button>
             </div>
           </div>
         )}
         <div className="tr-card-footer-links flex-col gap-sm">
-          <button className="tr-btn tr-btn-secondary">
-            <i className="fas fa-cart-arrow-down"></i>
-            {isCartCard ? "Remove from cart" : "Add to Cart"}
-          </button>
-          <button className="tr-btn tr-btn-primary">
-            {isCartCard ? "Move to Wishlist" : "Buy Now"}
-          </button>
+          {isCartCard ? (
+            <button
+              onClick={() =>
+                cartWishlistDispatch({
+                  type: "deleteItemFromCart",
+                  payload: id,
+                })
+              }
+              className="tr-btn tr-btn-secondary"
+            >
+              <i className="fas fa-cart-arrow-down"></i>
+              Remove from cart
+            </button>
+          ) : (
+            <CartButton isAddedToCart = {addedToCart} clickHandler = {cartClickHandler} isWishlistCard = {false} />
+          )}
+          <button className="tr-btn tr-btn-primary">Buy Now</button>
         </div>
       </div>
+      {showSnackbar ? (
+        <Snackbar
+          snackbarText={snackbarText}
+          actionBtn={actionBtn}
+          setShowSnackbar={setShowSnackbar}
+          duration={5}
+        />
+      ) : (
+        " "
+      )}
     </article>
   );
-}
+};
+
