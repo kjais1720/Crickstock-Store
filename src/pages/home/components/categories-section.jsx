@@ -8,7 +8,7 @@ export const Categories = ({ styles }) => {
   const { serverResponse, isLoading } = useAxios(apiUrl);
   const categories = serverResponse.data?.categories || [];
   return (
-    <section>
+    <section id="categories">
       <h2 className="txt-center mr-y-lg">Categories</h2>
       {isLoading ? (
         <LoaderForComponent />
