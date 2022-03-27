@@ -92,7 +92,7 @@ export const Header = () => {
         </nav>
       </div>
       <button
-        className={`${styles.trBtnIcon} tr-btn tr-btn-icon hamburger hide`}
+        className={`${styles.hamburger} hamburger tr-btn tr-btn-icon hamburger`}
       >
         <i className="fas fa-bars"></i>
       </button>

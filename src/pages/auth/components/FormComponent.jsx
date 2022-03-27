@@ -57,10 +57,10 @@ export function FormComponent({ formType }) {
       navigate("/");
     } else if (serverError.response?.status === 422) {
       setFormError((prev) => ({ ...prev, email: "This email already exists" }));
-    } else if (serverError.response?.status === 401){
-      setFormError(prev=>({...prev, password:"invalid password"}))
-    } else if (serverError.response?.status === 404){
-      setFormError(prev=>({...prev, email:"Email doesn't exists"}))
+    } else if (serverError.response?.status === 401) {
+      setFormError((prev) => ({ ...prev, password: "invalid password" }));
+    } else if (serverError.response?.status === 404) {
+      setFormError((prev) => ({ ...prev, email: "Email doesn't exists" }));
     }
   }, [serverResponse, serverError]);
 
@@ -118,7 +118,7 @@ export function FormComponent({ formType }) {
       </div>
       <button
         className={`${
-          disableSubmit || "disabledButton"
+          disableSubmit || "no-cursor"
         } tr-btn tr-btn-cta stretch-x`}
         type="submit"
         disabled={!disableSubmit}
@@ -164,7 +164,7 @@ export function FormComponent({ formType }) {
       </label>
       <button
         className={`${
-          disableSubmit || "disabledButton"
+          disableSubmit || "no-cursor"
         } tr-btn tr-btn-cta stretch-x`}
         type="submit"
         disabled={!disableSubmit}

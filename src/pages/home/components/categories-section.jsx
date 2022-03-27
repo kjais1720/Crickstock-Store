@@ -3,7 +3,7 @@ import { useAxios } from "utilities";
 import { useState } from "react";
 import { LoaderForComponent } from "components";
 
-export const Categories = ({ styles }) => {
+export function Categories({ styles }){
   const [apiUrl, setApiUrl] = useState("/api/categories");
   const { serverResponse, isLoading } = useAxios(apiUrl);
   const categories = serverResponse.data?.categories || [];

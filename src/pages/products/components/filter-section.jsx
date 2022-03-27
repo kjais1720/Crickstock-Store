@@ -1,31 +1,52 @@
 import { useProduct } from "contexts";
 
-export const FiltersSection = ({ styles, productsList }) => {
+export function FiltersSection({ styles, productsList, showFilter, filterToggler }) {
   const { productsState, productsDispatch } = useProduct();
-  const { priceLimit, sortBy, brands : selectedBrands, includeOutOfStock, ratings : selectedRating } = productsState;
+  const {
+    priceLimit,
+    sortBy,
+    brands: selectedBrands,
+    includeOutOfStock,
+    ratings: selectedRating,
+  } = productsState;
   const allDistinctBrands = productsList.reduce(
     (acc, { brand }) => (acc.includes(brand) ? acc : [...acc, brand]),
     []
   );
 
-  const changeHandler = (e) =>{
-    const {name, value} = e.target;
-    const radioType = e.target.getAttribute('data-action-type')
-    productsDispatch({type:radioType, payload:{name, value}})
-  }
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    productsDispatch({ type: "setFiltersAndSorts", payload: { name, value } });
+  };
 
   const brandsClickHandler = (e) => {
-    const {checked, value} = e.target;
-    if(checked){
-      productsDispatch({type:"setFiltersAndSorts", payload:{name:"brands", value:[...selectedBrands,value]}})
+    const { checked, value } = e.target;
+    if (checked) {
+      productsDispatch({
+        type: "setFiltersAndSorts",
+        payload: { name: "brands", value: [...selectedBrands, value] },
+      });
+    } else {
+      productsDispatch({
+        type: "setFiltersAndSorts",
+        payload: {
+          name: "brands",
+          value: selectedBrands.filter((item) => item !== value),
+        },
+      });
     }
-  }
+  };
   return (
-    <div className="filters-wrapper">
-      <aside className={`${styles.filters} tr-drawer flex-col gap-md pd-md`}>
+    <div onClick={filterToggler} className={` ${showFilter ? styles.activeFiltersWrapper : ""}`}>
+      <aside onClick={e=>e.stopPropagation()} className={`${styles.filters} filters tr-drawer flex-col gap-md pd-md`}>
         <div className="d-flex justify-c-space-between">
           <h2 className="txt-semibold">Filters</h2>
-          <button onClick={()=>productsDispatch({type:"resetFilter"})} className="tr-btn tr-btn-transparent">clear</button>
+          <button
+            onClick={() => productsDispatch({ type: "resetFilter" })}
+            className="tr-btn tr-btn-transparent"
+          >
+            clear
+          </button>
         </div>
         <div
           className={`${styles.filtersDrawer} tr-drawer-content flex-col gap-xlg`}
@@ -44,25 +65,33 @@ export const FiltersSection = ({ styles, productsList }) => {
                 list="tickmarks"
                 step="500"
               />
-              <label>{priceLimit}</label>
+              <label className="pd-xs bd2">₹{priceLimit}</label>
             </div>
           </div>
-          
+
           <div className="tr-card stretch-x flex-col gap-md">
             <h3 className="txt-semibold">Availability</h3>
             <div className="flex-col gap-sm">
-                <div className="tr-input-wrapper">
-                  <label>
-                    <input
-                      name="includeOutOfStock"
-                      onChange={(e)=>productsDispatch({type:"setFiltersAndSorts",payload:{name:"includeOutOfStock", value:e.target.checked}})}
-                      type="checkbox"
-                      className="tr-input-checkbox"
-                      checked = {includeOutOfStock}
-                    />
-                    Show Out of Stock                    
-                  </label>
-                </div>
+              <div className="tr-input-wrapper">
+                <label>
+                  <input
+                    name="includeOutOfStock"
+                    onChange={(e) =>
+                      productsDispatch({
+                        type: "setFiltersAndSorts",
+                        payload: {
+                          name: "includeOutOfStock",
+                          value: e.target.checked,
+                        },
+                      })
+                    }
+                    type="checkbox"
+                    className="tr-input-checkbox"
+                    checked={includeOutOfStock}
+                  />
+                  Show Out of Stock
+                </label>
+              </div>
             </div>
           </div>
 
@@ -76,8 +105,8 @@ export const FiltersSection = ({ styles, productsList }) => {
                       onChange={brandsClickHandler}
                       type="checkbox"
                       className="tr-input-checkbox"
-                      checked = {selectedBrands.includes(brand)}
-                      value = {brand}
+                      checked={selectedBrands.includes(brand)}
+                      value={brand}
                     />
                     {brand}
                   </label>
@@ -87,7 +116,7 @@ export const FiltersSection = ({ styles, productsList }) => {
           </div>
           <div className="tr-card stretch-x flex-col gap-md">
             <h3 className="txt-semibold">Ratings</h3>
-            {[5,4,3,2,1].map((rating,idx)=>
+            {["5", "4", "3", "2", "1"].map((rating, idx) => (
               <div key={idx} className="tr-input-wrapper">
                 <label>
                   <input
@@ -95,13 +124,13 @@ export const FiltersSection = ({ styles, productsList }) => {
                     className="tr-input-radio"
                     name="ratings"
                     value={rating}
-                    checked = {selectedRating === rating}
-                    onChange = {changeHandler}
+                    checked={selectedRating === rating}
+                    onChange={changeHandler}
                   />
-                  {rating} stars & above
+                  {rating === "5" ? `${rating} stars`  : `${rating} stars & above` }
                 </label>
               </div>
-            )}
+            ))}
           </div>
           <div className="tr-card stretch-x flex-col gap-md">
             <h3 className="txt-semibold">Sort by</h3>
@@ -136,4 +165,4 @@ export const FiltersSection = ({ styles, productsList }) => {
       </aside>
     </div>
   );
-};
+}
