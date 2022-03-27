@@ -1,0 +1,70 @@
+
+main{
+    flex: 1;
+}
+
+/* Filters Sidebar  */
+
+.filterBtn{
+    display: none;
+}
+
+.filters{
+    max-width: 18rem;
+    position: sticky;
+    top: 0;
+}
+
+.filtersDrawer{
+    margin-top: 0;
+    padding: var(--space-xs) 0;
+}
+
+.filters label{
+    color: var(--tr-text-secondary);
+}
+
+.pagination{
+    margin-left: auto;
+}
+
+/* Products section  */
+.productsContainer{
+    justify-items: center;
+}
+
+.productsContainer .tr-card-banner{
+    max-height: 15rem;
+}
+
+@media screen and (max-width:48em) {
+
+    .filter-btn{
+        display: block;
+    }
+
+    .filters{
+        position: fixed;
+        left: -100%;
+        height: 100vh;
+        transition: all ease 0.3s;
+        z-index: 999;
+    }
+
+    .filters-wrapper.active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        background-color: var(--tr-gray-overlay);
+    }
+    .filters.active{
+        left: 0;
+    }
+
+    .pagination >*{
+        font-size: var(--fs-xs);
+    }
+}

@@ -1,9 +1,9 @@
 import { findMaxRoundedPrice } from "./utilities";
 export const productsReducer = (state, { type, payload }) => {
-  const defaultPriceLimit = findMaxRoundedPrice(state.productsList).maxRoundedPrice;
+  const defaultPriceLimit = findMaxRoundedPrice(state.productsList);
   switch (type) {
     case "updateProductsList":
-      return { ...state, productsList: [...payload], priceLimit: findMaxRoundedPrice(payload).maxRoundedPrice };
+      return { ...state, productsList: [...payload], priceLimit: findMaxRoundedPrice(payload) };
     case "setFiltersAndSorts":
       return { ...state, runFilterFunction:true , [payload.name]: payload.value };
     case "setCategory":

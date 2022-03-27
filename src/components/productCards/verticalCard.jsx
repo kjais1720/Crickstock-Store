@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Snackbar } from "components";
+import { Snackbar, ProductBadge } from "components";
 import { getRatingsColor, calculateDiscount, CartButton } from "./utilities";
 import { useAuth, useCartWishlist } from "contexts";
 
@@ -12,11 +12,11 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
 
   const {
     _id: id,
-    available,
     imgSrc,
     name,
     brand,
     badgeText,
+    inStock,
     categoryName,
     ratings,
     price,
@@ -88,7 +88,7 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
 
   return (
     <article className="pdt-card tr-card flex-col gap-sm">
-      {badgeText ? productBadge(badgeText) : ""}
+      {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
       <button
         className="heart-icon tr-btn tr-btn-icon"
         onClick={() => wishlistClickHandler(addedToWishlist, product)}
@@ -130,18 +130,26 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
           {calculateDiscount(price, prevPrice)}% off
         </div>
       </div>
-      <div>{available}</div>
-      <div className="tr-card-footer-links flex-col gap-sm">
-        <CartButton
-          isAddedToCart={addedToCart}
-          clickHandler={cartClickHandler}
-          isWishlistCard={isWishlistCard}
-        />
-        <button className="tr-btn tr-btn-primary">
-          <i className="fas fa-bags-shopping"></i>
-          Buy Now
-        </button>
-      </div>
+      {inStock ?
+        <div className="tr-card-footer-links flex-col gap-sm">
+          <CartButton
+            isAddedToCart={addedToCart}
+            clickHandler={cartClickHandler}
+            isWishlistCard={isWishlistCard}
+          />
+          <button className="tr-btn tr-btn-primary">
+            <i className="fas fa-bags-shopping"></i>
+            Buy Now
+          </button>
+        </div>
+        : 
+        <div className="tr-card-footer-links flex-col gap-sm">
+            <button className="tr-btn tr-btn-error no-cursor">
+              Out of Stock
+            </button> 
+        </div>
+      }
+
 
       {showSnackbar ? (
         <Snackbar

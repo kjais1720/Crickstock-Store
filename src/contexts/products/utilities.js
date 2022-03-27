@@ -19,7 +19,7 @@
     const stepsValue = divisor / 10;
     const stepsCount = Math.floor(maxPrice / stepsValue);
     const maxRoundedPrice = stepsValue * stepsCount + stepsValue;
-    return { maxRoundedPrice, stepsCount, stepsValue };
+    return maxRoundedPrice;
   };
   
   const sortByPrice = (list, { sortBy }) => {
@@ -42,10 +42,10 @@
     [...list].filter((item) => Number(item.price) <= Number(priceLimit));
   
   const filterByRatigs = (list, { ratings }) =>
-    [...list].filter((item) => item.ratings > ratings);
+    [...list].filter((item) => item.ratings >= ratings);
   
   const filterByBrands = (list, { brands }) =>
-    brands[0] ? [...list].filter((item) => brands.includes(item.brand)) : list;
+    brands[0] ? [...list].filter((item) => brands.includes(item.brand)) : list; // If no brands are selected, return the whole list
   
   const filterByCategory = (list, { category }) =>
     category ? [...list].filter((item) => item.categoryName === category) : list;
