@@ -1,6 +1,6 @@
 import { useProduct } from "contexts";
 
-export function FiltersSection({ styles, productsList }) {
+export function FiltersSection({ styles, productsList, showFilter, filterToggler }) {
   const { productsState, productsDispatch } = useProduct();
   const {
     priceLimit,
@@ -37,8 +37,8 @@ export function FiltersSection({ styles, productsList }) {
     }
   };
   return (
-    <div className="filters-wrapper">
-      <aside className={`${styles.filters} tr-drawer flex-col gap-md pd-md`}>
+    <div onClick={filterToggler} className={` ${showFilter ? styles.activeFiltersWrapper : ""}`}>
+      <aside onClick={e=>e.stopPropagation()} className={`${styles.filters} filters tr-drawer flex-col gap-md pd-md`}>
         <div className="d-flex justify-c-space-between">
           <h2 className="txt-semibold">Filters</h2>
           <button
@@ -65,7 +65,7 @@ export function FiltersSection({ styles, productsList }) {
                 list="tickmarks"
                 step="500"
               />
-              <label>{priceLimit}</label>
+              <label className="pd-xs bd2">{priceLimit}</label>
             </div>
           </div>
 

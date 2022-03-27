@@ -26,7 +26,7 @@ export const categories = [
   },
   {
     _id: uuid(),
-    categoryName: "Gears",
+    categoryName: "All Products",
     imgSrc:
       "/assets/gears-category.png",
   }

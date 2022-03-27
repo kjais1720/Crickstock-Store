@@ -48,7 +48,7 @@
     brands[0] ? [...list].filter((item) => brands.includes(item.brand)) : list; // If no brands are selected, return the whole list
   
   const filterByCategory = (list, { category }) =>
-    category ? [...list].filter((item) => item.categoryName === category) : list;
+    category === "All Products" ? list : [...list].filter((item) => item.categoryName === category);
   
   const functionalChaining =
     (filterParams, ...functions) =>
