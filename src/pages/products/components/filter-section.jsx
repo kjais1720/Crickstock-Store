@@ -65,7 +65,7 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
                 list="tickmarks"
                 step="500"
               />
-              <label className="pd-xs bd2">{priceLimit}</label>
+              <label className="pd-xs bd2">₹{priceLimit}</label>
             </div>
           </div>
 
