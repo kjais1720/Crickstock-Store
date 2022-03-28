@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export function Cart() {
   document.title = "My Cart | Crickstock";
   const { cartItems, cartTotalEstimate } = useCartWishlist();
-  const { price, discount, totalPrice, totalCartItems } = cartTotalEstimate;
+  const { price, discount, totalPrice, totalItems } = cartTotalEstimate;
 
   return cartItems[0] ? (
     <main className="pd-md">
@@ -28,8 +28,8 @@ export function Cart() {
           <div className="flex-col">
             <div className="d-flex justify-c-space-between">
               <span>
-                Price ({totalCartItems}{" "}
-                {totalCartItems === 1 || totalCartItems === 0
+                Price ({totalItems}{" "}
+                {totalItems === 1 || totalItems === 0
                   ? "item"
                   : "items"}{" "}
                 )
