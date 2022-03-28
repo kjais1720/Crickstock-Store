@@ -21,7 +21,7 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         apiMethod: "post",
         postData: { product: { ...payload, qty: 1 } },
       };
-    case "deleteItemFromCart":
+    case "removeFromCart":
       return {
         ...state,
         apiUrl: `/api/user/cart/${payload}`,

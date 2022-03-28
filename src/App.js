@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import { Header, Footer } from "components";
-import { Home, Products, Cart, Auth, Wishlist } from "pages";
+import { Home, Products, Cart, Auth, Wishlist, AuthMiddleware } from "pages";
 
 function App() {
   return (
@@ -16,11 +16,12 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/products" element={<Products/>} />
           <Route path="/products/:category" element={<Products />} />
-          <Route path="/cart" element={<Cart/>} />
+          <Route element={<AuthMiddleware/>}>
+            <Route path="/cart" element={<Cart/>} />
+            <Route path="/wishlist" element={<Wishlist/>} />
+          </Route>
           <Route path="/auth" element={<Auth/>} />
-          <Route path="/wishlist" element={<Wishlist/>} />
           <Route path="/mock-api" element={<MockAPI/>} />
         </Routes>
         <Footer/>

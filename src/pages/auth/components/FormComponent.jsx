@@ -54,7 +54,7 @@ export function FormComponent({ formType }) {
       });
       setFormData({ ...defaultFormState });
       setFormError({ ...defaultError });
-      navigate("/");
+      navigate(-1);
     } else if (serverError.response?.status === 422) {
       setFormError((prev) => ({ ...prev, email: "This email already exists" }));
     } else if (serverError.response?.status === 401) {

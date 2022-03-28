@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { ProductBadge, Snackbar } from "components";
-import { getRatingsColor, calculateDiscount, getCartButton, CartButton } from "./utilities";
+import {
+  getRatingsColor,
+  calculateDiscount,
+  getCartButton,
+  CartButton,
+} from "./utilities";
 import { useAuth, useCartWishlist } from "contexts";
-export function HorizontalProductCard({ product, isCartCard }){
+export function HorizontalProductCard({ product, isCartCard }) {
   const {
     _id: id,
     imgSrc,
@@ -13,56 +18,65 @@ export function HorizontalProductCard({ product, isCartCard }){
     price,
     prevPrice,
   } = product;
-  const {userState:{isUserAuthenticated}} = useAuth();
-  const { cartItems, wishlistItems, cartWishlistDispatch } = useCartWishlist();
-  const [snackbarProps, setSnackbarProps ] = useState({
-    showSnackbar:false,
-    snackbarText:"",
-    actionBtn:{
+  const {
+    userState: { isUserAuthenticated },
+  } = useAuth();
+  const { cartItems, wishlistItems, cartWishlistDispatch, isLoading } =
+    useCartWishlist();
+  const [snackbarProps, setSnackbarProps] = useState({
+    showSnackbar: false,
+    snackbarText: "",
+    actionBtn: {
       linkPath: "",
       btnType: "",
       btnText: "",
-      clickHandler:null
-    }
-  })
-  const setShowSnackbar = bool => {
-    setSnackbarProps(prev => ({...prev,showSnackbar:bool}))
-  } 
-  const {showSnackbar, snackbarText, actionBtn} = snackbarProps;
+      clickHandler: null,
+    },
+  });
+  const setShowSnackbar = (bool) => {
+    setSnackbarProps((prev) => ({ ...prev, showSnackbar: bool }));
+  };
+  const { showSnackbar, snackbarText, actionBtn } = snackbarProps;
 
   const itemInCart = cartItems.find((item) => item._id === id);
   const itemInWishlist = wishlistItems.find((item) => item._id === id);
   const addedToCart = itemInCart ? true : false;
   const addedToWishlist = itemInWishlist ? true : false;
-  
+
   const cartClickHandler = () => {
-    if (isUserAuthenticated){
+    if (isUserAuthenticated) {
       cartWishlistDispatch({ type: "addItemToCart", payload: product });
-    } else setSnackbarProps(prev=>({
-      ...prev,
-      showSnackbar:true,
-      snackbarText:"Please Login to add the item to cart!",
-      actionBtn:{
-        linkPath: "/auth",
-        btnType: "link",
-        btnText: "Login", 
-      } 
-    }));
+    } else
+      setSnackbarProps((prev) => ({
+        ...prev,
+        showSnackbar: true,
+        snackbarText: "Please Login to add the item to cart!",
+        actionBtn: {
+          linkPath: "/auth",
+          btnType: "link",
+          btnText: "Login",
+        },
+      }));
   };
 
   const wishlistClickHandler = () => {
     if (isUserAuthenticated) {
+      if (itemInWishlist) {
+        cartWishlistDispatch({ type: "removeFromWishlist", payload: product._id });
+      } else{
         cartWishlistDispatch({ type: "addToWishlist", payload: product });
-    } else setSnackbarProps(prev=>({
-      ...prev,
-      showSnackbar:true,
-      snackbarText:"Please Login to add the item to cart!",
-      actionBtn:{
-        linkPath: "/auth",
-        btnType: "link",
-        btnText: "Login", 
-      } 
-    }));
+      }
+    } else
+      setSnackbarProps((prev) => ({
+        ...prev,
+        showSnackbar: true,
+        snackbarText: "Please Login to add the item to cart!",
+        actionBtn: {
+          linkPath: "/auth",
+          btnType: "link",
+          btnText: "Login",
+        },
+      }));
   };
   const quantityBtnClickHandler = (product, action) => {
     switch (action) {
@@ -80,7 +94,7 @@ export function HorizontalProductCard({ product, isCartCard }){
           });
         } else {
           cartWishlistDispatch({
-            type: "deleteItemFromCart",
+            type: "removeFromCart",
             payload: product._id,
           });
         }
@@ -90,12 +104,15 @@ export function HorizontalProductCard({ product, isCartCard }){
 
   return (
     <article className="pdt-card tr-card tr-card-hor d-flex">
-      {badgeText ? <ProductBadge badgeText={badgeText}/> : ""}
+      {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
       <div className="tr-card-banner">
         <img src={imgSrc} alt={name} />
       </div>
       <div className="flex-col justify-c-start p-rel">
-        <button className="heart-icon tr-btn tr-btn-icon">
+        <button
+          onClick={wishlistClickHandler}
+          className="heart-icon tr-btn tr-btn-icon"
+        >
           <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
         </button>
         <div className="tr-card-header">
@@ -146,7 +163,7 @@ export function HorizontalProductCard({ product, isCartCard }){
             <button
               onClick={() =>
                 cartWishlistDispatch({
-                  type: "deleteItemFromCart",
+                  type: "removeFromCart",
                   payload: id,
                 })
               }
@@ -156,7 +173,11 @@ export function HorizontalProductCard({ product, isCartCard }){
               Remove from cart
             </button>
           ) : (
-            <CartButton isAddedToCart = {addedToCart} clickHandler = {cartClickHandler} isWishlistCard = {false} />
+            <CartButton
+              isAddedToCart={addedToCart}
+              clickHandler={cartClickHandler}
+              isWishlistCard={false}
+            />
           )}
           <button className="tr-btn tr-btn-primary">Buy Now</button>
         </div>
@@ -173,5 +194,4 @@ export function HorizontalProductCard({ product, isCartCard }){
       )}
     </article>
   );
-};
-
+}

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export function Products() {
   document.title = "Products | Crickstock";
+
   const [showFilter, setShowFilter ] = useState(false)
   const {
     productsState,
@@ -44,6 +45,10 @@ export function Products() {
         filterToggler={filterToggler}
       />
       <main className="flex-col pd-md gap-lg">
+        <div>
+          <h2 className="txt-center">{category}</h2>
+          <p>Showing {productsOfSelectedCategory.length} products</p>
+        </div>
         <div className="d-flex justify-c-space-between">
           <button onClick={filterToggler} className={`${styles.filterBtn} filter-btn tr-btn tr-btn-primary pd-xs`}>
             Filter <i className="fas fa-filter"></i>
@@ -54,18 +59,6 @@ export function Products() {
         ) : (
           <ProductsSection styles={styles} productsList={productsToDisplay} />
         )}
-
-        <div className="d-flex gap-sm mr-x-auto align-i-center pagination">
-          <button className="tr-btn tr-btn-icon">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <p className="txt-left">
-            Showing 1 - 9 of {productsToDisplay.length} results
-          </p>
-          <button className="tr-btn tr-btn-icon">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-        </div>
       </main>
     </div>
   );
