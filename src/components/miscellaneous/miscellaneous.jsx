@@ -12,21 +12,14 @@ export function ProductBadge({ badgeText }) {
 }
 
 export function DropdownMenu({ links, menuTitle }){
-  const [showPageMenu, setShowPageMenu] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setShowPageMenu(true)}
-      onMouseLeave={() => setShowPageMenu(false)}
-      className={styles.pageMenuWrapper}
-    >
+    <div className={styles.pageMenuWrapper} >
       <button className="tr-btn tr-btn-link d-flex align-i-center gap-sm">
         {menuTitle}
         <i className="fas fa-caret-down"></i>
       </button>
       <ul
-        className={`flex-col ${styles.pageMenu} ${
-          showPageMenu && styles.activeMenu
-        }`}
+        className={`flex-col ${styles.pageMenu}`}
       >
         {links.map((link, idx) =>
           link.name === "Logout" ? (
