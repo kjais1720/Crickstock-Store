@@ -35,7 +35,7 @@ export const Header = () => {
         name: "Shoes",
       },
       {
-        path: "/products/all-products",
+        path: "/products/All Products",
         name: "All products",
       },
     ],
