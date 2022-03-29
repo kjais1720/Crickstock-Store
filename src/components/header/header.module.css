@@ -2,6 +2,7 @@
 
 .header{
     border-radius: 0;
+    justify-content: space-between;
     padding: var(--space-sm) var(--space-xlg) var(--space-sm) var(--space-lg);
 }
 
@@ -9,7 +10,7 @@
     flex-basis: 300px;
 }
 
-.header .tr-input-wrapper{
+.searchInputWrapper{
     margin-left: auto;
     width: clamp(15rem, 30vw, 30rem);
 }
@@ -23,7 +24,7 @@
 }
 
 .headerMenu{
-    flex: 1;
+    flex: 1 1 32rem;
 }
 
 .pageMenuWrapper{
@@ -60,9 +61,5 @@
 .pageMenu a:hover,
 .pageMenu a:focus{
     color: var(--tr-accent-color);
-}
-
-.hamburger{
-    display: none;
 }
 
