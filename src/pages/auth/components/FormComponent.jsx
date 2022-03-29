@@ -64,6 +64,11 @@ export function FormComponent({ formType }) {
     }
   }, [serverResponse, serverError]);
 
+  useEffect(()=>{
+    setFormData({...defaultError})
+    setFormError({...defaultError})
+  },[formType])
+
   const inputHandler = (e) => {
     e.preventDefault();
     const { name, value, required } = e.target;
@@ -74,12 +79,13 @@ export function FormComponent({ formType }) {
 
   const formSubmitHandler = async (e, route, data) => {
     e.preventDefault();
-    let requiredPostData = {
+    const requiredPostData = {
       email: data.email,
       password: data.password,
     };
     if (route === "/api/auth/signup") {
-      requiredPostData = { ...requiredPostData, ...data };
+      requiredPostData.fullName = data.fullName;
+      requiredPostData.lastName = data.lastName;
     }
     setApiUrl(route);
     setDataToPost(requiredPostData);
