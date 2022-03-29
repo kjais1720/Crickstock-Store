@@ -9,7 +9,7 @@ export function Home(){
         <main>
             <HeroBanner styles={styles}/>
             <Categories styles={styles}/>
-            <NewArrivals/>
+            <NewArrivals styles={styles}/>
         </main>
     )
 }
