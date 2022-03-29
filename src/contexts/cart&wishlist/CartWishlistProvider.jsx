@@ -8,6 +8,7 @@ import {
 import { useAuth } from "contexts";
 import { useAxios } from "utilities";
 import { cartWishlistReducer } from "./reducer";
+import { findCartEstimate } from "./utilities";
 
 const cartWishlistContext = createContext({
   cartItems: [],
@@ -63,11 +64,15 @@ export const CartWishlistProvider = ({ children }) => {
     }
     return ()=>clearTimeout(timeoutId);
   }, [isUserAuthenticated]);
+
+  const cartTotalEstimate = findCartEstimate(cartItems);
+
   return (
     <cartWishlistContext.Provider
       value={{
         cartItems,
         wishlistItems,
+        cartTotalEstimate,
         cartWishlistDispatch,
         isLoading,
       }}

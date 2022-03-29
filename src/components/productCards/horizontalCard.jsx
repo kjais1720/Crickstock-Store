@@ -83,7 +83,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
       case "increment":
         cartWishlistDispatch({
           type: "changeItemQuantity",
-          payload: { id, action: "decrement" },
+          payload: { id, action: "increment" },
         });
         break;
       case "decrement":
