@@ -47,7 +47,7 @@ export function Products() {
       <main className="flex-col pd-md gap-lg">
         <div>
           <h2 className="txt-center">{category}</h2>
-          <p>Showing {productsOfSelectedCategory.length} products</p>
+          <p>Showing {productsToDisplay.length} products</p>
         </div>
         <div className="d-flex justify-c-space-between">
           <button onClick={filterToggler} className={`${styles.filterBtn} filter-btn tr-btn tr-btn-primary pd-xs`}>
