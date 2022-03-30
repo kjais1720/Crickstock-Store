@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import { useAuth, useCartWishlist } from "contexts";
@@ -9,6 +10,7 @@ export const Header = () => {
     userState: { isUserAuthenticated, user },
     userDispatch,
   } = useAuth();
+  const [showNav, setShowNav] = useState(false);
   const headerDropdownMenuList = {
     userLinks: [
       {
@@ -41,14 +43,20 @@ export const Header = () => {
     ],
   };
   return (
-    <div className={`${styles.header} tr-header d-flex f-wrap`}>
+    <div className={`${styles.header} tr-header ${showNav && "active"} d-flex f-wrap`}>
       <div className="tr-heading d-flex">
         <Link to="/" className={styles.logo}>
           <img src="/assets/crickstock-logo.png" alt="Crickstock logo" />
         </Link>
       </div>
-      <div className={`${styles.headerMenu} d-flex justify-c-space-between`}>
-        <div className="tr-input-wrapper d-flex gap-sm">
+      <button
+        className={`${styles.hamburger} hamburger tr-btn tr-btn-icon hide`}
+        onClick={()=>setShowNav(prev=> !prev)}
+      >
+        <i className="fas fa-bars"></i>
+      </button>
+      <div className={`${styles.headerMenu} d-flex justify-c-space-between f-wrap`}>
+        <div className={`${styles.searchInputWrapper} tr-input-wrapper d-flex gap-sm`}>
           <input type="text" className="tr-input-item" placeholder="Search" />
           <button className="tr-btn tr-btn-icon">
             <i className="fas fa-search"></i>
@@ -91,11 +99,6 @@ export const Header = () => {
           </div>
         </nav>
       </div>
-      <button
-        className={`${styles.hamburger} hamburger tr-btn tr-btn-icon hamburger`}
-      >
-        <i className="fas fa-bars"></i>
-      </button>
     </div>
   );
 };

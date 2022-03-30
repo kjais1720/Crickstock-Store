@@ -13,7 +13,7 @@ export function Categories({ styles }){
       {isLoading ? (
         <LoaderForComponent />
       ) : (
-        <div className="d-grid grid-autofit-sm gap-sm">
+        <div className="d-grid grid-autofit-sm gap-sm justify-i-center">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -21,7 +21,7 @@ export function Categories({ styles }){
               className={`${styles.categoriesCard} tr-card light-shadow`}
             >
               <div className="tr-card-banner">
-                <img src={category.imgSrc} alt={category} />
+                <img src={category.imgSrc} alt={category.categoryName} />
                 <div
                   className={`${styles.categoriesTextOverlay} text-overlay flex-center`}
                 >

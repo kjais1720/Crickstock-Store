@@ -76,7 +76,7 @@ section{
 }
 
 @media screen and (max-width: 500px){
-    #productCardsContainer{
+    .productCardsContainer{
         grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     }
 }

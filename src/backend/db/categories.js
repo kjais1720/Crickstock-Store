@@ -10,13 +10,13 @@ export const categories = [
     _id: uuid(),
     categoryName: "Bats",
     imgSrc:
-      "/assets/Bats-category.webp",
+      "/assets/bats-category.webp",
   },
   {
     _id: uuid(),
     categoryName: "Balls",
     imgSrc:
-      "/assets/balls-category.webp",
+    "/assets/balls-category.webp",
   },
   {
     _id: uuid(),
