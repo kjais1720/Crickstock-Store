@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { ProductBadge, Snackbar } from "components";
+import { ProductBadge } from "components";
 import {
   getRatingsColor,
   calculateDiscount,
-  getCartButton,
   CartButton,
+  ToastContent
 } from "./utilities";
+import { toast } from "react-toastify";
 import { useAuth, useCartWishlist } from "contexts";
 export function HorizontalProductCard({ product, isCartCard }) {
   const {
@@ -21,22 +21,9 @@ export function HorizontalProductCard({ product, isCartCard }) {
   const {
     userState: { isUserAuthenticated },
   } = useAuth();
+
   const { cartItems, wishlistItems, cartWishlistDispatch, isLoading } =
     useCartWishlist();
-  const [snackbarProps, setSnackbarProps] = useState({
-    showSnackbar: false,
-    snackbarText: "",
-    actionBtn: {
-      linkPath: "",
-      btnType: "",
-      btnText: "",
-      clickHandler: null,
-    },
-  });
-  const setShowSnackbar = (bool) => {
-    setSnackbarProps((prev) => ({ ...prev, showSnackbar: bool }));
-  };
-  const { showSnackbar, snackbarText, actionBtn } = snackbarProps;
 
   const itemInCart = cartItems.find((item) => item._id === id);
   const itemInWishlist = wishlistItems.find((item) => item._id === id);
@@ -46,56 +33,42 @@ export function HorizontalProductCard({ product, isCartCard }) {
   const cartClickHandler = () => {
     if (isUserAuthenticated) {
       cartWishlistDispatch({ type: "addItemToCart", payload: product });
-    } else
-      setSnackbarProps((prev) => ({
-        ...prev,
-        showSnackbar: true,
-        snackbarText: "Please Login to add the item to cart!",
-        actionBtn: {
-          linkPath: "/auth",
-          btnType: "link",
-          btnText: "Login",
-        },
-      }));
+    } 
+    else{
+      toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
+    }
   };
 
   const wishlistClickHandler = () => {
     if (isUserAuthenticated) {
       if (itemInWishlist) {
-        cartWishlistDispatch({ type: "removeFromWishlist", payload: product._id });
+        cartWishlistDispatch({ type: "removeFromWishlist", payload: product });
       } else{
         cartWishlistDispatch({ type: "addToWishlist", payload: product });
       }
-    } else
-      setSnackbarProps((prev) => ({
-        ...prev,
-        showSnackbar: true,
-        snackbarText: "Please Login to add the item to cart!",
-        actionBtn: {
-          linkPath: "/auth",
-          btnType: "link",
-          btnText: "Login",
-        },
-      }));
+    }
+    else{
+      toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
+    }
   };
   const quantityBtnClickHandler = (product, action) => {
     switch (action) {
       case "increment":
         cartWishlistDispatch({
           type: "changeItemQuantity",
-          payload: { id, action: "increment" },
+          payload: { product, action: "increment" },
         });
         break;
       case "decrement":
         if (product.qty > 1) {
           cartWishlistDispatch({
             type: "changeItemQuantity",
-            payload: { id, action: "decrement" },
+            payload: { product, action: "decrement" },
           });
         } else {
           cartWishlistDispatch({
             type: "removeFromCart",
-            payload: product._id,
+            payload: product,
           });
         }
         break;
@@ -122,7 +95,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
           <h3 className="subtitle">{brand}</h3>
         </div>
         <div className="d-flex align-i-center gap-xs">
-          <div className="tr-ratings-badge txt-left ratings-sm tr-ratings-badge-green">
+          <div className={`tr-ratings-badge txt-left ratings-sm tr-ratings-badge-${getRatingsColor(ratings)}`}>
             <i className="fas fa-star"></i>
             <span>{ratings}</span>
           </div>
@@ -164,7 +137,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
               onClick={() =>
                 cartWishlistDispatch({
                   type: "removeFromCart",
-                  payload: id,
+                  payload: product,
                 })
               }
               className="tr-btn tr-btn-secondary"
@@ -182,16 +155,6 @@ export function HorizontalProductCard({ product, isCartCard }) {
           <button className="tr-btn tr-btn-primary">Buy Now</button>
         </div>
       </div>
-      {showSnackbar ? (
-        <Snackbar
-          snackbarText={snackbarText}
-          actionBtn={actionBtn}
-          setShowSnackbar={setShowSnackbar}
-          duration={5}
-        />
-      ) : (
-        " "
-      )}
     </article>
   );
 }

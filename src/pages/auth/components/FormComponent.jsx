@@ -1,5 +1,6 @@
 import { InputField } from "./inputField";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { useAxios } from "utilities";
 import { useAuth } from "contexts";
 import { ButtonLoader } from "components";
@@ -44,17 +45,23 @@ export function FormComponent({ formType }) {
   );
   useEffect(() => {
     if (serverResponse.status === 201 || serverResponse.status === 200) {
+      const user = serverResponse.data.createdUser || serverResponse.data.foundUser ;
       userDispatch({
         type: "login",
         payload: {
-          user:
-            serverResponse.data.createdUser || serverResponse.data.foundUser,
+          user,
           encodedToken: serverResponse.data.encodedToken,
         },
       });
       setFormData({ ...defaultFormState });
       setFormError({ ...defaultError });
-      navigate(-1);
+      // Fire toast
+      serverResponse.status === 200
+      ? toast.success(`Logged in. Welcome back ${user.firstName}`)
+      : toast.success(
+        `Signed up. Welcome aboard ${user.firstName}`
+        );
+        navigate(-1);
     } else if (serverError.response?.status === 422) {
       setFormError((prev) => ({ ...prev, email: "This email already exists" }));
     } else if (serverError.response?.status === 401) {
@@ -64,10 +71,10 @@ export function FormComponent({ formType }) {
     }
   }, [serverResponse, serverError]);
 
-  useEffect(()=>{
-    setFormData({...defaultError})
-    setFormError({...defaultError})
-  },[formType])
+  useEffect(() => {
+    setFormData({ ...defaultError });
+    setFormError({ ...defaultError });
+  }, [formType]);
 
   const inputHandler = (e) => {
     e.preventDefault();
@@ -84,7 +91,7 @@ export function FormComponent({ formType }) {
       password: data.password,
     };
     if (route === "/api/auth/signup") {
-      requiredPostData.fullName = data.fullName;
+      requiredPostData.firstName = data.firstName;
       requiredPostData.lastName = data.lastName;
     }
     setApiUrl(route);

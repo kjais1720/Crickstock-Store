@@ -1,3 +1,4 @@
+
 export const cartWishlistReducer = (state, { type, payload }) => {
   const defaultState = {
     apiUrl: "",
@@ -20,21 +21,28 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         apiUrl: `/api/user/cart`,
         apiMethod: "post",
         postData: { product: { ...payload, qty: 1 } },
+        toastMessage:`${payload.name} added to cart`,
+        toastType:"success"
       };
     case "removeFromCart":
       return {
         ...state,
-        apiUrl: `/api/user/cart/${payload}`,
+        apiUrl: `/api/user/cart/${payload._id}`,
         apiMethod: "delete",
+        toastMessage:`${payload.name} removed from cart`,
+        toastType:"success"
       };
     case "changeItemQuantity":
+      const { product:{_id, qty}, action} = payload
+    if(qty >= 3) return{...state,toastMessage:"Maximum allowed quantity reached", toastType:"error"};
       return {
         ...state,
-        apiUrl: `/api/user/cart/${payload.id}`,
+        apiUrl: `/api/user/cart/${_id}`,
         apiMethod: "post",
         postData: {
           action: { type: payload.action },
         },
+        toastMessage:`Quantity ${action}ed`
       };
     case "clearCart":
       return {
@@ -56,16 +64,25 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         postData: {
           product: payload,
         },
+        toastMessage:`${payload.name} added to Wishlist`,
+        toastType:"success"
       };
     case "removeFromWishlist":
       return {
         ...state,
-        apiUrl: `/api/user/wishlist/${payload}`,
+        apiUrl: `/api/user/wishlist/${payload._id}`,
         apiMethod: "delete",
         postData: {
           product: {},
         },
+        toastMessage:`${payload.name} removed from Wishlist`,
+        toastType:"success"
       };
+    case "clearToastMessage":
+      return{
+        ...state,
+        toastMessage:""
+      }
     default:
       return state;
   }

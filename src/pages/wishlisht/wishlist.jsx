@@ -11,10 +11,10 @@ export function Wishlist(){
         {
             wishlistItems[0]
             ? <>
-            <h2 class="txt-center">
+            <h2 className="txt-center">
                 My Wishlist
             </h2>
-            <div id="productCardsContainer" class="wishlist-cards d-flex justify-c-center gap-xlg f-wrap mr-y-lg">
+            <div id="productCardsContainer" className="wishlist-cards d-flex justify-c-center gap-xlg f-wrap mr-y-lg">
             {
                 wishlistItems?.map((product) => (
                 <VerticalProductCard key={product.id} product={product} isWishlistCard = {true} />

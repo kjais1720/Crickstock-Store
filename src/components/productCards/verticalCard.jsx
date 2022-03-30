@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Snackbar, ProductBadge } from "components";
-import { getRatingsColor, calculateDiscount, CartButton } from "./utilities";
+import { toast } from "react-toastify";
+import { ProductBadge } from "components";
+import { getRatingsColor, calculateDiscount, CartButton, ToastContent } from "./utilities";
 import { useAuth, useCartWishlist } from "contexts";
 
 export const VerticalProductCard = ({ product, isWishlistCard }) => {
@@ -22,20 +22,6 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
     price,
     prevPrice,
   } = product;
-  const [snackbarProps, setSnackbarProps ] = useState({
-    showSnackbar:false,
-    snackbarText:"",
-    actionBtn:{
-      linkPath: "",
-      btnType: "",
-      btnText: "",
-      clickHandler:null
-    }
-  })
-  const setShowSnackbar = bool => {
-    setSnackbarProps(prev => ({...prev,showSnackbar:bool}))
-  } 
-  const {showSnackbar, snackbarText, actionBtn} = snackbarProps;
   const itemInCart = cartItems.find((item) => item._id === id);
   const itemInWishlist = wishlistItems.find((item) => item._id === id);
   const addedToCart = itemInCart ? true : false;
@@ -47,21 +33,15 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
         // Increase the item quantity if its already added to cart and is a wishlist card
         cartWishlistDispatch({
           type: "changeItemQuantity",
-          payload: { id: id, action: "increment" },
+          payload: { product : itemInCart, action: "increment" },
         });
       } else {
         cartWishlistDispatch({ type: "addItemToCart", payload: product });
       }
-    } else setSnackbarProps(prev=>({
-      ...prev,
-      showSnackbar:true,
-      snackbarText:"Please Login to add the item to cart!",
-      actionBtn:{
-        linkPath: "/auth",
-        btnType: "link",
-        btnText: "Login", 
-      } 
-    }));
+    }
+    else{
+      toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
+    }
   };
 
   const wishlistClickHandler = (addedToWishlist, product) => {
@@ -69,21 +49,15 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
       if (addedToWishlist) {
         cartWishlistDispatch({
           type: "removeFromWishlist",
-          payload: product._id,
+          payload: product,
         });
       } else {
         cartWishlistDispatch({ type: "addToWishlist", payload: product });
       }
-    } else setSnackbarProps(prev=>({
-      ...prev,
-      showSnackbar:true,
-      snackbarText:"Please Login to add the item to cart!",
-      actionBtn:{
-        linkPath: "/auth",
-        btnType: "link",
-        btnText: "Login", 
-      } 
-    }));
+    } 
+    else{
+      toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
+    }
   };
 
   return (
@@ -149,18 +123,6 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
             </button> 
         </div>
       }
-
-
-      {showSnackbar ? (
-        <Snackbar
-          snackbarText={snackbarText}
-          actionBtn={actionBtn}
-          setShowSnackbar={setShowSnackbar}
-          duration={5}
-        />
-      ) : (
-        " "
-      )}
     </article>
   );
 };

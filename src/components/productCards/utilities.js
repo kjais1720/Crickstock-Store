@@ -36,3 +36,14 @@ export function CartButton({isAddedToCart, clickHandler, isWishlistCard}) {
     </button>
   );
 }
+
+export function ToastContent({toastMessage}){
+  return(
+    <div className={`d-flex f-wrap gap-sm`}>
+    <p className="txt-primary">{toastMessage}</p>
+    <Link to="/auth" className="txt-accent">
+      Login
+    </Link>
+  </div>
+  )
+}

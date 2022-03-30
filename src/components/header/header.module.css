@@ -25,6 +25,7 @@
 
 .headerMenu{
     flex: 1 1 32rem;
+    gap: 1rem;
 }
 
 .pageMenuWrapper{
