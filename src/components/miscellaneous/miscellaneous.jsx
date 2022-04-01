@@ -2,6 +2,7 @@ import styles from "./miscellaneous.module.css"
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTimer } from "utilities";
+import { ToastContainer } from "react-toastify";
 
 export function Badge({ badgeCount }) {
   return <div className={`${styles.badge} badge badge-red`}>{badgeCount}</div>;
@@ -37,34 +38,11 @@ export function DropdownMenu({ links, menuTitle }){
   );
 };
 
-
-export function Snackbar({ snackbarText, actionBtn, setShowSnackbar, duration }) {
-  const { timeLeft } = useTimer(duration);
-  if(timeLeft === 0) setShowSnackbar(false);
-  const bottomBorderWidth = Math.floor((100/duration))*timeLeft;
-  const getActionButton = ({ linkPath, btnType, clickHandler, btnText }) => {
-    if ( btnType === 'link'){
-      return(
-        <Link to={linkPath} className="txt-accent">
-          {btnText}
-        </Link>
-      )
-    }
-    else if(btnType === "button"){
-      return(
-        <button onClick={clickHandler} className="tr-snackbar-link">
-          {btnText}
-        </button>
-      )
-    }
-    return ""
-  }
-
-  return (
-    <div className={`${styles.snackbar} tr-snackbar bg-primary d-flex f-wrap p-abs hor-centered`}>
-      <p className="tr-snackbar-text">{snackbarText}</p>
-      {getActionButton(actionBtn)}
-      <div className={`${styles.bottomBorder} bg-accent`} style={{width: bottomBorderWidth+"%" }}></div>
-    </div>
-  );
+export function Toast(){
+  return(
+  <ToastContainer
+    position={"bottom-right"}
+    autoClose={4000}
+    draggable
+  />)
 }

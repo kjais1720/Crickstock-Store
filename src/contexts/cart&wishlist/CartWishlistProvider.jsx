@@ -5,6 +5,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
+import { toast } from "react-toastify";
 import { useAuth } from "contexts";
 import { useAxios } from "utilities";
 import { cartWishlistReducer } from "./reducer";
@@ -31,8 +32,10 @@ export const CartWishlistProvider = ({ children }) => {
     postData: {
       product: {},
     },
+    toastMessage:"",
+    toastType:"success"
   });
-  const { serverResponse, isLoading } = useAxios(
+  const { serverResponse, isLoading, serverError } = useAxios(
     cartWishlistState.apiUrl,
     cartWishlistState.apiMethod,
     cartWishlistState.postData,
@@ -65,6 +68,15 @@ export const CartWishlistProvider = ({ children }) => {
     return ()=>clearTimeout(timeoutId);
   }, [isUserAuthenticated]);
 
+  useEffect(()=>{
+    if(serverError.error){
+      toast.error("An Error occured, please retry.")
+    }
+    else if(cartWishlistState.toastMessage && !isLoading){
+      toast[cartWishlistState.toastType](cartWishlistState.toastMessage);
+      cartWishlistDispatch({type:"clearToastMessage"})
+    }
+  },[isLoading, cartWishlistState.toastMessage, serverError])
   const cartTotalEstimate = findCartEstimate(cartItems);
 
   return (
