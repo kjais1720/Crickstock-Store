@@ -9,7 +9,8 @@ section{
 
 .hero{
     position: relative;
-    height: 80vh;
+    min-height: 80vh;
+    max-height: 40rem;
     background-image: var(--bg-gradient-overlay);
     background-size: cover;
     background-attachment: fixed;

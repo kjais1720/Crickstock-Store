@@ -20,6 +20,18 @@ body{
     overflow: hidden scroll;
 }
 
+.App{
+    max-width: 120rem;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer{
+    margin-top: auto;
+}
+
 section{
     padding: var(--space-xlg) 0;
 }
