@@ -42,7 +42,7 @@ export function Toast(){
   return(
   <ToastContainer
     position={"bottom-right"}
-    autoClose={4000}
+    autoClose={2000}
     draggable
   />)
 }
