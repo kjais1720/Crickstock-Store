@@ -1,7 +1,6 @@
+import 'react-toastify/dist/ReactToastify.css';
 import styles from "./miscellaneous.module.css"
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTimer } from "utilities";
 import { ToastContainer } from "react-toastify";
 
 export function Badge({ badgeCount }) {
@@ -42,7 +41,7 @@ export function Toast(){
   return(
   <ToastContainer
     position={"bottom-right"}
-    autoClose={2000}
+    autoClose={1000}
     draggable
   />)
 }

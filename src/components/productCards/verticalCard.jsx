@@ -77,6 +77,7 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
             currentTarget.onerror = null; // prevents looping
             currentTarget.src = `/assets/${categoryName}-Category.webp`;
           }}
+          alt={name}
         />
       </div>
       <div className="tr-card-header">

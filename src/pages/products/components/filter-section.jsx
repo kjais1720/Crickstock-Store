@@ -1,6 +1,11 @@
 import { useProduct } from "contexts";
 
-export function FiltersSection({ styles, productsList, showFilter, filterToggler }) {
+export function FiltersSection({
+  styles,
+  productsList,
+  showFilter,
+  filterToggler,
+}) {
   const { productsState, productsDispatch } = useProduct();
   const {
     priceLimit,
@@ -37,8 +42,14 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
     }
   };
   return (
-    <div onClick={filterToggler} className={` ${showFilter ? styles.activeFiltersWrapper : ""}`}>
-      <aside onClick={e=>e.stopPropagation()} className={`${styles.filters} filters tr-drawer flex-col gap-md pd-md`}>
+    <div
+      onClick={filterToggler}
+      className={` ${showFilter ? styles.activeFiltersWrapper : ""}`}
+    >
+      <aside
+        onClick={(e) => e.stopPropagation()}
+        className={`${styles.filters} filters tr-drawer flex-col gap-md pd-md`}
+      >
         <div className="d-flex justify-c-space-between">
           <h2 className="txt-semibold">Filters</h2>
           <button
@@ -51,11 +62,11 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
         <div
           className={`${styles.filtersDrawer} tr-drawer-content flex-col gap-xlg`}
         >
-          <div className="tr-card stretch-x">
+          <div className="tr-card w-100">
             <h3 className="txt-semibold">Price</h3>
             <div className="tr-input-wrapper">
               <input
-                className="tr-range-slider stretch-x"
+                className="tr-range-slider w-100"
                 onChange={changeHandler}
                 name="priceLimit"
                 type="range"
@@ -69,7 +80,7 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
             </div>
           </div>
 
-          <div className="tr-card stretch-x flex-col gap-md">
+          <div className="tr-card w-100 flex-col gap-md">
             <h3 className="txt-semibold">Availability</h3>
             <div className="flex-col gap-sm">
               <div className="tr-input-wrapper">
@@ -95,7 +106,7 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
             </div>
           </div>
 
-          <div className="tr-card stretch-x flex-col gap-md">
+          <div className="tr-card w-100 flex-col gap-md">
             <h3 className="txt-semibold">Brands</h3>
             <div className="flex-col gap-sm">
               {allDistinctBrands.map((brand, idx) => (
@@ -114,7 +125,7 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
               ))}
             </div>
           </div>
-          <div className="tr-card stretch-x flex-col gap-md">
+          <div className="tr-card w-100 flex-col gap-md">
             <h3 className="txt-semibold">Ratings</h3>
             {["5", "4", "3", "2", "1"].map((rating, idx) => (
               <div key={idx} className="tr-input-wrapper">
@@ -127,12 +138,14 @@ export function FiltersSection({ styles, productsList, showFilter, filterToggler
                     checked={selectedRating === rating}
                     onChange={changeHandler}
                   />
-                  {rating === "5" ? `${rating} stars`  : `${rating} stars & above` }
+                  {rating === "5"
+                    ? `${rating} stars`
+                    : `${rating} stars & above`}
                 </label>
               </div>
             ))}
           </div>
-          <div className="tr-card stretch-x flex-col gap-md">
+          <div className="tr-card w-100 flex-col gap-md">
             <h3 className="txt-semibold">Sort by</h3>
             <div className="tr-input-wrapper">
               <label>
