@@ -20,6 +20,14 @@ body{
     overflow: hidden scroll;
 }
 
+.App{
+    max-width: 120rem;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 section{
     padding: var(--space-xlg) 0;
 }
@@ -55,13 +63,6 @@ h3, h4, h5, h6{
     width: clamp(12rem, 20vw, 20rem);
 }
 
-.stretch-x{
-    width: 100%;
-}
-
-.justify-i-center{
-    justify-items: center;
-}
 
 .no-cursor{
     cursor: not-allowed;
@@ -75,12 +76,9 @@ h3, h4, h5, h6{
     display: none;
 }
 
-.tr-snackbar {
-    position: fixed;
-    right: 50px;
+.min-height-100{
+    min-height: 100vh;
 }
-
-
 
 .tr-card{
     background-color: var(--tr-background);
@@ -180,7 +178,7 @@ h3, h4, h5, h6{
 
 
 footer{
-    margin-top: var(--space-xlg);
+    margin-top: auto;
     padding: var(--space-xlg) clamp(var(--space-sm), calc(-0.875rem + 8.33vw), var(--space-xxlg)) var(--space-xs);
 }
 

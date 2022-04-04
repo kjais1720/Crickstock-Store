@@ -1,13 +1,11 @@
 import "./App.css"
-import 'react-toastify/dist/ReactToastify.css';
-import MockAPI from "./mockMan";
 import {
   Routes,
   Route,
 } from "react-router-dom";
 
 import { Header, Footer, Toast } from "components";
-import { Home, Products, Cart, Auth, Wishlist, AuthMiddleware } from "pages";
+import { Home, Products, Cart, Auth, Wishlist, AuthMiddleware, NotFound, ComingSoon } from "pages";
 
 function App() {
   return (
@@ -21,7 +19,8 @@ function App() {
             <Route path="/wishlist" element={<Wishlist/>} />
           </Route>
           <Route path="/auth" element={<Auth/>} />
-          <Route path="/mock-api" element={<MockAPI/>} />
+          <Route path="*" element={<NotFound/>} />
+          <Route path="/user/profile" element={<ComingSoon/>} />
         </Routes>
         <Footer/>
       <Toast/>

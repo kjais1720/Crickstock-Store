@@ -14,7 +14,7 @@ export function Auth() {
       </div>
 
       <div className="form-body flex-col align-i-center">
-        <div className="d-flex form-toggle-buttons justify-c-center stretch-x">
+        <div className="d-flex form-toggle-buttons justify-c-center w-100">
           <button
             onClick={() => setFormToShow("login")}
             className={`tr-btn ${

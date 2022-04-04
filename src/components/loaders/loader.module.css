@@ -46,7 +46,7 @@
 	aspect-ratio: 1;
 	border-radius: 50%;
 	position: relative;
-	background-color: var(--tr-primary-color);
+	background-color: var(--tr-white);
 	animation: buttonLoader 1.2s infinite linear calc(var(--delay,0)*.4s);
 }
 

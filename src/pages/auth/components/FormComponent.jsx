@@ -1,11 +1,8 @@
 import { InputField } from "./inputField";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { useAxios } from "utilities";
 import { useAuth } from "contexts";
 import { ButtonLoader } from "components";
 import { formFields, validateInput, isFormValid } from "../utilities";
-import { useNavigate } from "react-router-dom";
 
 /**
  *
@@ -21,47 +18,28 @@ export function FormComponent({ formType }) {
     confirmPassword: "",
   };
   const defaultError = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   };
   const guestCredentials = {
     email: "adarshbalika@gmail.com",
     password: "adarshBalika@123",
   };
 
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(defaultFormState);
   const [formError, setFormError] = useState(defaultError);
+  const [ actionType, setActionType ] = useState("login")
 
-  const [apiUrl, setApiUrl] = useState("");
-  const [dataToPost, setDataToPost] = useState({});
-  const { userDispatch } = useAuth();
-
-  const { serverResponse, isLoading, serverError } = useAxios(
-    apiUrl,
-    "post",
-    dataToPost
-  );
-  useEffect(() => {
+  const { loginSignupHandler, serverResponse, serverError, isLoading } = useAuth();
+ 
+  useEffect(() => { // To handle response from the server
     if (serverResponse.status === 201 || serverResponse.status === 200) {
-      const user = serverResponse.data.createdUser || serverResponse.data.foundUser ;
-      userDispatch({
-        type: "login",
-        payload: {
-          user,
-          encodedToken: serverResponse.data.encodedToken,
-        },
-      });
       setFormData({ ...defaultFormState });
       setFormError({ ...defaultError });
-      // Fire toast
-      serverResponse.status === 200
-      ? toast.success(`Logged in. Welcome back ${user.firstName}`)
-      : toast.success(
-        `Signed up. Welcome aboard ${user.firstName}`
-        );
-        navigate(-1);
     } else if (serverError.response?.status === 422) {
       setFormError((prev) => ({ ...prev, email: "This email already exists" }));
     } else if (serverError.response?.status === 401) {
@@ -84,18 +62,10 @@ export function FormComponent({ formType }) {
     setFormError((prevError) => ({ ...prevError, [name]: error }));
   };
 
-  const formSubmitHandler = async (e, route, data) => {
+  const formSubmitHandler = (e, route, data, action) => {
     e.preventDefault();
-    const requiredPostData = {
-      email: data.email,
-      password: data.password,
-    };
-    if (route === "/api/auth/signup") {
-      requiredPostData.firstName = data.firstName;
-      requiredPostData.lastName = data.lastName;
-    }
-    setApiUrl(route);
-    setDataToPost(requiredPostData);
+    setActionType(action)
+    loginSignupHandler(route, data)
   };
 
   const disableSubmit = isFormValid(formError, formData);
@@ -116,7 +86,7 @@ export function FormComponent({ formType }) {
           formError={formError}
         />
       ))}
-      <div className="d-flex justify-c-space-between stretch-x">
+      <div className="d-flex justify-c-space-between w-100">
         <label className="txt-md">
           <input
             type="checkbox"
@@ -130,22 +100,20 @@ export function FormComponent({ formType }) {
         </a>
       </div>
       <button
-        className={`${
-          disableSubmit || "no-cursor"
-        } tr-btn tr-btn-cta stretch-x`}
+        className={`${disableSubmit || "no-cursor"} tr-btn tr-btn-cta w-100`}
         type="submit"
         disabled={!disableSubmit}
-        onClick={(e) => formSubmitHandler(e, "/api/auth/login", formData)}
+        onClick={(e) => formSubmitHandler(e, "/api/auth/login", formData, "login")}
       >
-        {isLoading ? <ButtonLoader /> : "Login"}
+        {isLoading && actionType==="login" ? <ButtonLoader /> : "Login"}
       </button>
       <button
-        className="tr-btn tr-btn-outline-primary stretch-x"
+        className="tr-btn tr-btn-outline-primary w-100"
         onClick={(e) =>
-          formSubmitHandler(e, "/api/auth/login", guestCredentials)
+          formSubmitHandler(e, "/api/auth/login", guestCredentials, "guestLogin")
         }
       >
-        Guest Login
+        {isLoading && actionType==="guestLogin" ? <ButtonLoader /> : "Guest Login"}
       </button>
     </form>
   ) : (
@@ -176,14 +144,12 @@ export function FormComponent({ formType }) {
         </a>
       </label>
       <button
-        className={`${
-          disableSubmit || "no-cursor"
-        } tr-btn tr-btn-cta stretch-x`}
+        className={`${disableSubmit || "no-cursor"} tr-btn tr-btn-cta w-100`}
         type="submit"
         disabled={!disableSubmit}
-        onClick={(e) => formSubmitHandler(e, "/api/auth/signup", formData)}
+        onClick={(e) => formSubmitHandler(e, "/api/auth/signup", formData, "signup")}
       >
-        {isLoading ? <ButtonLoader /> : "Signup"}
+        {isLoading && actionType==="signup" ? <ButtonLoader /> : "Signup"}
       </button>
     </form>
   );
