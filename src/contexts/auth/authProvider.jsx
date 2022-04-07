@@ -29,7 +29,6 @@ export function AuthProvider({ children }) {
     user: {
       cart: [],
       wishlist: [],
-      addresses: [],
     },
   });
   const [authApiState, setAuthApiState] = useState({
@@ -39,7 +38,7 @@ export function AuthProvider({ children }) {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const pageToRedirect = location.state?.from?.pathname || location.pathname;
+  const pageToRedirect = location.state?.from?.pathname || "/";
 
   const { serverResponse, isLoading, serverError } = useAxios(
     authApiState.url,

@@ -7,10 +7,14 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "contexts";
-import { useAxios, cartWishlistDispatchConstants } from "utilities";
+import { useAxios, cartWishlistDispatchConstants, localStorageConstants } from "utilities";
 import axios from "axios";
 import { cartWishlistReducer } from "./reducer";
 import { findCartEstimate } from "./utilities";
+
+const {
+  USER_TOKEN,
+} = localStorageConstants
 
 const { CLEAR_TOAST_MESSAGE } = cartWishlistDispatchConstants;
 
@@ -21,9 +25,9 @@ const cartWishlistContext = createContext({
 });
 
 const getData = (apiRoute) => {
-  const authToken = localStorage.getItem('userToken');
-  axios.get(apiRoute,{
-    Headers:{
+  const authToken = localStorage.getItem(USER_TOKEN);
+  return axios.get(apiRoute,{
+    headers:{
       authorization: authToken
     }
   })

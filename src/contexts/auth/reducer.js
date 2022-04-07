@@ -1,8 +1,9 @@
-import { authDispatchConstants } from "utilities"
+import { authDispatchConstants, localStorageConstants } from "utilities"
 const {
     LOGIN,
     LOGOUT,
   } = authDispatchConstants
+const {USER_TOKEN, USER_INFO } = localStorageConstants
 /**
  * @param {object} state : the auth state containing properties of the user
  * @param {object} action : Containing type & payload properties  
@@ -13,8 +14,8 @@ const {
         case LOGIN:
             return {...state, isUserAuthenticated:true, user : {...payload}}
         case LOGOUT:
-            localStorage.removeItem("user")
-            localStorage.removeItem("userToken")
+            localStorage.removeItem(USER_INFO)
+            localStorage.removeItem(USER_TOKEN)
             return {...state, isUserAuthenticated:false, user : {}}
         default:
             return state;
