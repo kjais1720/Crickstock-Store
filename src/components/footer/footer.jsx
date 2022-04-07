@@ -54,8 +54,8 @@ export function Footer() {
             <Link to="/products/Shoes" className="tr-btn tr-btn-link">
               Shoes
             </Link>
-            <Link to="/products/Gears" className="tr-btn tr-btn-link">
-              Gears
+            <Link to="/products/All Products" className="tr-btn tr-btn-link">
+              All Products
             </Link>
           </ul>
         </div>

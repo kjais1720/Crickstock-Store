@@ -2,6 +2,14 @@ import { toast } from "react-toastify";
 import { ProductBadge } from "components";
 import { getRatingsColor, calculateDiscount, CartButton, ToastContent } from "./utilities";
 import { useAuth, useCartWishlist } from "contexts";
+import { cartWishlistDispatchConstants } from "utilities";
+const {
+  ADD_ITEM_TO_CART,
+  CHANGE_ITEM_QUANTITY,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+} = cartWishlistDispatchConstants;
+
 
 export const VerticalProductCard = ({ product, isWishlistCard }) => {
   const { cartItems, wishlistItems, cartWishlistDispatch, isLoading } =
@@ -27,16 +35,16 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
   const addedToCart = itemInCart ? true : false;
   const addedToWishlist = itemInWishlist ? true : false;
 
-  const cartClickHandler = () => {
+  const addToCart = () => {
     if (isUserAuthenticated) {
       if (addedToCart && isWishlistCard) {
         // Increase the item quantity if its already added to cart and is a wishlist card
         cartWishlistDispatch({
-          type: "changeItemQuantity",
+          type: CHANGE_ITEM_QUANTITY,
           payload: { product : itemInCart, action: "increment" },
         });
       } else {
-        cartWishlistDispatch({ type: "addItemToCart", payload: product });
+        cartWishlistDispatch({ type: ADD_ITEM_TO_CART, payload: product });
       }
     }
     else{
@@ -44,15 +52,15 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
     }
   };
 
-  const wishlistClickHandler = (addedToWishlist, product) => {
+  const addToWishlist = (addedToWishlist, product) => {
     if (isUserAuthenticated) {
       if (addedToWishlist) {
         cartWishlistDispatch({
-          type: "removeFromWishlist",
+          type: REMOVE_FROM_WISHLIST,
           payload: product,
         });
       } else {
-        cartWishlistDispatch({ type: "addToWishlist", payload: product });
+        cartWishlistDispatch({ type: ADD_TO_WISHLIST, payload: product });
       }
     } 
     else{
@@ -65,7 +73,7 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
       {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
       <button
         className="heart-icon tr-btn tr-btn-icon"
-        onClick={() => wishlistClickHandler(addedToWishlist, product)}
+        onClick={() => addToWishlist(addedToWishlist, product)}
       >
         <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
       </button>
@@ -109,7 +117,7 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
         <div className="tr-card-footer-links flex-col gap-sm">
           <CartButton
             isAddedToCart={addedToCart}
-            clickHandler={cartClickHandler}
+            clickHandler={addToCart}
             isWishlistCard={isWishlistCard}
           />
           <button className="tr-btn tr-btn-primary">

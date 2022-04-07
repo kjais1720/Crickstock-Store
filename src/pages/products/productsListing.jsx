@@ -3,13 +3,14 @@ import { FiltersSection } from "./components/filter-section";
 import { ProductsSection } from "./components/products-section";
 import { useProduct } from "contexts";
 import { LoaderForComponent } from "components";
+import { productsDispatchConstants } from "utilities";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export function Products() {
   document.title = "Products | Crickstock";
 
-  const [showFilter, setShowFilter ] = useState(false)
+  const [showFilter, setShowFilter] = useState(false);
   const {
     productsState,
     productsList,
@@ -19,6 +20,8 @@ export function Products() {
   } = useProduct();
   const { runFilterFunction } = productsState;
   const { category } = useParams();
+  
+  const { SET_CATEGORY } = productsDispatchConstants;
 
   const productsOfSelectedCategory =
     category === "All Products"
@@ -30,12 +33,12 @@ export function Products() {
     : productsOfSelectedCategory;
 
   useEffect(() => {
-    productsDispatch({ type: "setCategory", payload: category });
+    productsDispatch({ type: SET_CATEGORY, payload: category });
   }, [category]);
 
-  const filterToggler = () =>{
-    setShowFilter(prev=>!prev)
-  }
+  const filterToggler = () => {
+    setShowFilter((prev) => !prev);
+  };
   return (
     <div className="d-flex">
       <FiltersSection
@@ -50,7 +53,10 @@ export function Products() {
           <p>Showing {productsToDisplay.length} products</p>
         </div>
         <div className="d-flex justify-c-space-between">
-          <button onClick={filterToggler} className={`${styles.filterBtn} filter-btn tr-btn tr-btn-primary pd-xs`}>
+          <button
+            onClick={filterToggler}
+            className={`${styles.filterBtn} filter-btn tr-btn tr-btn-primary pd-xs`}
+          >
             Filter <i className="fas fa-filter"></i>
           </button>
         </div>

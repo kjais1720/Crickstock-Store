@@ -1,5 +1,7 @@
 import { useProduct } from "contexts";
-
+import {
+  productsDispatchConstants,
+} from "utilities";
 export function FiltersSection({
   styles,
   productsList,
@@ -14,6 +16,9 @@ export function FiltersSection({
     includeOutOfStock,
     ratings: selectedRating,
   } = productsState;
+
+  const { SET_FILTERS_AND_SORTS } = productsDispatchConstants;
+
   const allDistinctBrands = productsList.reduce(
     (acc, { brand }) => (acc.includes(brand) ? acc : [...acc, brand]),
     []
@@ -21,19 +26,19 @@ export function FiltersSection({
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    productsDispatch({ type: "setFiltersAndSorts", payload: { name, value } });
+    productsDispatch({ type: SET_FILTERS_AND_SORTS, payload: { name, value } });
   };
 
   const brandsClickHandler = (e) => {
     const { checked, value } = e.target;
     if (checked) {
       productsDispatch({
-        type: "setFiltersAndSorts",
+        type: SET_FILTERS_AND_SORTS,
         payload: { name: "brands", value: [...selectedBrands, value] },
       });
     } else {
       productsDispatch({
-        type: "setFiltersAndSorts",
+        type: SET_FILTERS_AND_SORTS,
         payload: {
           name: "brands",
           value: selectedBrands.filter((item) => item !== value),
@@ -89,7 +94,7 @@ export function FiltersSection({
                     name="includeOutOfStock"
                     onChange={(e) =>
                       productsDispatch({
-                        type: "setFiltersAndSorts",
+                        type: SET_FILTERS_AND_SORTS,
                         payload: {
                           name: "includeOutOfStock",
                           value: e.target.checked,
