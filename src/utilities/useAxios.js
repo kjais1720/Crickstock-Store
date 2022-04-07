@@ -20,7 +20,7 @@ export const useAxios = (apiUrl, method = "get", postData) => {
     const getData = async () => {
         const authToken = localStorage.getItem(USER_TOKEN);
         try {
-            setApiState(prev=> ({...prev,isLoading:false}))
+            setApiState(prev=> ({...prev,isLoading:true}))
             let res;
             switch (method){
                 case "get":
