@@ -7,6 +7,10 @@ An E-commere web app, built with React and mirageJS as a mock backend
   ## Live URL
 ### <https://crickstock-store.vercel.app>
   
+## Preview
+
+https://user-images.githubusercontent.com/66024105/162265280-131daa7a-478c-43d2-9917-1061ee6d2e59.mp4
+
 
 ## To run locally
 
