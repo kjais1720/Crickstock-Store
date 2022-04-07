@@ -11,7 +11,7 @@ An E-commere web app, built with React and mirageJS as a mock backend
 ## To run locally
 
 - Clone the project locally using the command :
-    - `git clone https://github.com/kjais1720/Crickstreams.git`
+    - `git clone https://github.com/kjais1720/Crickstock-store.git`
 - Install the dependencies :
 	- `npm install`
 - Start the app :
