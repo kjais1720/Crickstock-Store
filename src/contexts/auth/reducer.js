@@ -7,9 +7,11 @@
  export const authReducer = (state, {type,payload}) => {
     switch (type){
         case "login":
-            return {...state, isUserAuthenticated:true, user : {...payload.user}, encodedToken : payload.encodedToken}
+            return {...state, isUserAuthenticated:true, user : {...payload}}
         case "logout":
-            return {...state, isUserAuthenticated:false, user : {}, encodedToken:""}
+            localStorage.removeItem("user")
+            localStorage.removeItem("userToken")
+            return {...state, isUserAuthenticated:false, user : {}}
         default:
             return state;
     }

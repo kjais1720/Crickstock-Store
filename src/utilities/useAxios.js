@@ -30,6 +30,7 @@ export const useAxios = (apiUrl, method = "get", postData, authToken) => {
         isLoading:false
     })
     const getData = async () => {
+        const authToken = localStorage.getItem('userToken')
         try {
             apiDispatch({type:"setLoadingTrue"});
             let res;

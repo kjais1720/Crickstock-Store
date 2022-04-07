@@ -1,6 +1,12 @@
-import { useContext, createContext, useReducer, useState, useEffect } from "react";
+import {
+  useContext,
+  createContext,
+  useReducer,
+  useState,
+  useEffect,
+} from "react";
 import { authReducer } from "./reducer";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { useAxios } from "utilities";
 
@@ -16,7 +22,6 @@ export function AuthProvider({ children }) {
       wishlist: [],
       addresses: [],
     },
-    encodedToken: "",
   });
   const [authApiState, setAuthApiState] = useState({
     url: "",
@@ -24,28 +29,40 @@ export function AuthProvider({ children }) {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const pageToRedirect = location.state?.from?.pathname || location.pathname;
 
   const { serverResponse, isLoading, serverError } = useAxios(
     authApiState.url,
     "post",
     authApiState.data
   );
+
+  useEffect(() => {
+    // To get the user details everytime the page reloads, from the saved token in localstorage
+    const user = localStorage.getItem("user");
+    console.log({user})
+    if(user){
+      userDispatch({ type: "login", payload: JSON.parse(user) });
+    }
+  }, []);
+
   useEffect(() => {
     if (serverResponse.status === 201 || serverResponse.status === 200) {
       const user = serverResponse.data.user;
+      const encodedToken = serverResponse.data.encodedToken;
+      localStorage.setItem("userToken", encodedToken);
+      localStorage.setItem("user", JSON.stringify(user));
       userDispatch({
         type: "login",
-        payload: {
-          user,
-          encodedToken: serverResponse.data.encodedToken,
-        },
+        payload: user,
       });
 
       // Fire toast
       serverResponse.status === 200
         ? toast.success(`Logged in. Welcome back ${user.firstName}`)
         : toast.success(`Signed up. Welcome aboard ${user.firstName}`);
-      navigate(-1);
+      navigate(pageToRedirect);
     }
   }, [serverResponse, serverError]);
 

@@ -1,5 +1,4 @@
 import {
-    useState,
     createContext,
     useContext,
     useReducer,
@@ -13,7 +12,6 @@ import {
   export const useProduct = () => useContext(productsContext);
   
   export const ProductProvider = ({ children }) => {
-    const [apiUrl, setApiUrl] = useState("/api/products");
     const [productsState, productsDispatch] = useReducer(productsReducer, {
       productsList: [],
       runFilterFunction:false,
@@ -27,8 +25,7 @@ import {
     
     // The filters won't be applied initially, it will only be applied when the user selects any fiilter
     const filteredProducts = productsState.runFilterFunction ? applyFilterAndSorts(productsState) : productsState.productsList;
-    const { serverResponse, isLoading } = useAxios(apiUrl);
-  
+    const { serverResponse, isLoading } = useAxios("/api/products");
     useEffect(() => {
       const productsFromServer = serverResponse.data?.products || [];
       productsDispatch({

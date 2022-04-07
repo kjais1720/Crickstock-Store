@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { useAuth } from "contexts";
 import { useAxios } from "utilities";
+import axios from "axios";
 import { cartWishlistReducer } from "./reducer";
 import { findCartEstimate } from "./utilities";
 
@@ -17,13 +18,21 @@ const cartWishlistContext = createContext({
   setCartItems: () => {},
 });
 
+const getData = (apiRoute) => {
+  const authToken = localStorage.getItem('userToken');
+  axios.get(apiRoute,{
+    Headers:{
+      authorization: authToken
+    }
+  })
+}
 export const useCartWishlist = () => useContext(cartWishlistContext);
 
 export const CartWishlistProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setwishlistItems ] = useState([]);
   const {
-    userState: { isUserAuthenticated, encodedToken },
+    userState: { isUserAuthenticated },
   } = useAuth();
 
   const [cartWishlistState, cartWishlistDispatch] = useReducer(cartWishlistReducer, {
@@ -38,8 +47,7 @@ export const CartWishlistProvider = ({ children }) => {
   const { serverResponse, isLoading, serverError } = useAxios(
     cartWishlistState.apiUrl,
     cartWishlistState.apiMethod,
-    cartWishlistState.postData,
-    encodedToken
+    cartWishlistState.postData
     );
   useEffect(() => {
     // To update the cart and wishlist state everytime the app gets new data from the server
@@ -53,19 +61,25 @@ export const CartWishlistProvider = ({ children }) => {
   }, [serverResponse]);
 
   useEffect(() => {
-    let timeoutId;
     if (!isUserAuthenticated) {
       cartWishlistDispatch({ type: "clearCart" })
       setCartItems([]);
       setwishlistItems([]);
     }
     else {
-      cartWishlistDispatch({ type: "getCartList" });
-      timeoutId = setTimeout(()=>{ // To get the wishlist after the cart list is fetched from the server and stored in the local state
-        cartWishlistDispatch({type:"getWishlist"})
-      },0)
+      Promise.all([
+        getData("/api/user/cart"),
+        getData("/api/user/wishlist"),
+      ])
+        .then((values) => {
+          const [cartResponse , wishlistResponse] = values;
+          const {data:{cart}} = cartResponse
+          const {data:{wishlist}} = wishlistResponse   
+          setCartItems(cart);
+          setwishlistItems(wishlist);
+        })
+        .catch((err) => console.log(err));
     }
-    return ()=>clearTimeout(timeoutId);
   }, [isUserAuthenticated]);
 
   useEffect(()=>{
