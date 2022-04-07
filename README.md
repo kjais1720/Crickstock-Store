@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/66024105/162265280-131daa7a-478c-43d2-
 ## To run locally
 
 - Clone the project locally using the command :
-    - `git clone https://github.com/kjais1720/Crickstock-store.git`
+    - `git clone https://github.com/kjais1720/Crickstock-Store.git`
 - Install the dependencies :
 	- `npm install`
 - Start the app :
