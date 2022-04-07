@@ -12,7 +12,7 @@ export function AuthMiddleware() {
 
   useEffect(()=>{
     if(!userToken) {
-      toast.error("You need to login first!")
+      toast.error("You need to login to access this page!")
     }
   },[isUserAuthenticated])
 

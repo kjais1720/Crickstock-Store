@@ -7,10 +7,12 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "contexts";
-import { useAxios } from "utilities";
+import { useAxios, cartWishlistDispatchConstants } from "utilities";
 import axios from "axios";
 import { cartWishlistReducer } from "./reducer";
 import { findCartEstimate } from "./utilities";
+
+const { CLEAR_TOAST_MESSAGE } = cartWishlistDispatchConstants;
 
 const cartWishlistContext = createContext({
   cartItems: [],
@@ -62,7 +64,7 @@ export const CartWishlistProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isUserAuthenticated) {
-      cartWishlistDispatch({ type: "clearCart" })
+      cartWishlistDispatch({ type: CLEAR_TOAST_MESSAGE })
       setCartItems([]);
       setwishlistItems([]);
     }
@@ -88,7 +90,7 @@ export const CartWishlistProvider = ({ children }) => {
     }
     else if(cartWishlistState.toastMessage && !isLoading){
       toast[cartWishlistState.toastType](cartWishlistState.toastMessage);
-      cartWishlistDispatch({type:"clearToastMessage"})
+      cartWishlistDispatch({type:CLEAR_TOAST_MESSAGE})
     }
   },[isLoading, cartWishlistState.toastMessage, serverError])
   const cartTotalEstimate = findCartEstimate(cartItems);

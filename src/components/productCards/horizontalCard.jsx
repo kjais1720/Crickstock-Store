@@ -7,6 +7,16 @@ import {
 } from "./utilities";
 import { toast } from "react-toastify";
 import { useAuth, useCartWishlist } from "contexts";
+import { cartWishlistDispatchConstants } from "utilities";
+const {
+  ADD_ITEM_TO_CART,
+  REMOVE_FROM_CART,
+  CHANGE_ITEM_QUANTITY,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+} = cartWishlistDispatchConstants;
+
+
 export function HorizontalProductCard({ product, isCartCard }) {
   const {
     _id: id,
@@ -30,47 +40,51 @@ export function HorizontalProductCard({ product, isCartCard }) {
   const addedToCart = itemInCart ? true : false;
   const addedToWishlist = itemInWishlist ? true : false;
 
-  const cartClickHandler = () => {
+  const addToCart = () => {
     if (isUserAuthenticated) {
-      cartWishlistDispatch({ type: "addItemToCart", payload: product });
+      cartWishlistDispatch({ type: ADD_ITEM_TO_CART, payload: product });
     } 
     else{
       toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
     }
   };
 
-  const wishlistClickHandler = () => {
+  const removeFromCart = () => cartWishlistDispatch({type:REMOVE_FROM_CART, payload:product})
+
+  const addToWishlist = () => {
     if (isUserAuthenticated) {
       if (itemInWishlist) {
-        cartWishlistDispatch({ type: "removeFromWishlist", payload: product });
+        cartWishlistDispatch({ type: REMOVE_FROM_WISHLIST, payload: product });
       } else{
-        cartWishlistDispatch({ type: "addToWishlist", payload: product });
+        cartWishlistDispatch({ type: ADD_TO_WISHLIST, payload: product });
       }
     }
     else{
       toast.error(<ToastContent toastMessage={"You need to login first!"}/>)
     }
   };
-  const quantityBtnClickHandler = (product, action) => {
+  const updateItemQuantity = (product, action) => {
     switch (action) {
       case "increment":
         cartWishlistDispatch({
-          type: "changeItemQuantity",
+          type: CHANGE_ITEM_QUANTITY,
           payload: { product, action: "increment" },
         });
         break;
       case "decrement":
         if (product.qty > 1) {
           cartWishlistDispatch({
-            type: "changeItemQuantity",
+            type: CHANGE_ITEM_QUANTITY,
             payload: { product, action: "decrement" },
           });
         } else {
           cartWishlistDispatch({
-            type: "removeFromCart",
+            type: REMOVE_FROM_CART,
             payload: product,
           });
         }
+        break;
+      default:
         break;
     }
   };
@@ -83,7 +97,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
       </div>
       <div className="flex-col justify-c-start p-rel">
         <button
-          onClick={wishlistClickHandler}
+          onClick={addToWishlist}
           className="heart-icon tr-btn tr-btn-icon"
         >
           <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
@@ -120,13 +134,13 @@ export function HorizontalProductCard({ product, isCartCard }) {
                 }}
                 disabled={itemInCart.qty >= 3}
                 className="align-s-center txt-primary fas fa-plus"
-                onClick={() => quantityBtnClickHandler(product, "increment")}
+                onClick={() => updateItemQuantity(product, "increment")}
               ></button>
               <div className="pd-x-sm">{itemInCart.qty}</div>
               <button
                 style={{ border: "none" }}
                 className="align-s-center txt-primary fas fa-minus"
-                onClick={() => quantityBtnClickHandler(product, "decrement")}
+                onClick={() => updateItemQuantity(product, "decrement")}
               ></button>
             </div>
           </div>
@@ -134,12 +148,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
         <div className="tr-card-footer-links flex-col gap-sm">
           {isCartCard ? (
             <button
-              onClick={() =>
-                cartWishlistDispatch({
-                  type: "removeFromCart",
-                  payload: product,
-                })
-              }
+              onClick={removeFromCart}
               className="tr-btn tr-btn-secondary"
             >
               <i className="fas fa-cart-arrow-down"></i>
@@ -148,7 +157,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
           ) : (
             <CartButton
               isAddedToCart={addedToCart}
-              clickHandler={cartClickHandler}
+              clickHandler={addToCart}
               isWishlistCard={false}
             />
           )}

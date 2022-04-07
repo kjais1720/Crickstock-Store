@@ -9,6 +9,15 @@ import { authReducer } from "./reducer";
 import { useNavigate, useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { useAxios } from "utilities";
+import { authDispatchConstants, localStorageConstants } from "utilities"
+const {
+    LOGIN,
+  } = authDispatchConstants
+
+const {
+  USER_TOKEN,
+  USER_INFO
+} = localStorageConstants
 
 const AuthContext = createContext({ isUserAuthenticated: false, user: {} });
 
@@ -40,10 +49,9 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     // To get the user details everytime the page reloads, from the saved token in localstorage
-    const user = localStorage.getItem("user");
-    console.log({user})
+    const user = localStorage.getItem(USER_INFO);
     if(user){
-      userDispatch({ type: "login", payload: JSON.parse(user) });
+      userDispatch({ type: LOGIN, payload: JSON.parse(user) });
     }
   }, []);
 
@@ -51,10 +59,10 @@ export function AuthProvider({ children }) {
     if (serverResponse.status === 201 || serverResponse.status === 200) {
       const user = serverResponse.data.user;
       const encodedToken = serverResponse.data.encodedToken;
-      localStorage.setItem("userToken", encodedToken);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem(USER_TOKEN, encodedToken);
+      localStorage.setItem(USER_INFO, JSON.stringify(user));
       userDispatch({
-        type: "login",
+        type: LOGIN,
         payload: user,
       });
 

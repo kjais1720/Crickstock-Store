@@ -3,6 +3,8 @@ import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import { useAuth, useCartWishlist } from "contexts";
 import { Badge, DropdownMenu } from "components/miscellaneous/miscellaneous";
+import { authDispatchConstants } from "utilities";
+const { LOGOUT } = authDispatchConstants;
 
 export const Header = () => {
   const { cartItems, wishlistItems } = useCartWishlist();
@@ -20,7 +22,7 @@ export const Header = () => {
       {
         path: "/logout",
         name: "Logout",
-        clickHandler: userDispatch,
+        clickHandler: ()=> userDispatch({type:LOGOUT}),
       },
     ],
     productPageLinks: [

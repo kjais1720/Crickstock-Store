@@ -1,3 +1,16 @@
+import { cartWishlistDispatchConstants } from "utilities";
+const {
+  GET_CART_LIST,
+  ADD_ITEM_TO_CART,
+  REMOVE_FROM_CART,
+  CHANGE_ITEM_QUANTITY,
+  CLEAR_CART,
+  GET_WISHLIST,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+  CLEAR_TOAST_MESSAGE,
+} = cartWishlistDispatchConstants;
+
 export const cartWishlistReducer = (state, { type, payload }) => {
   const defaultState = {
     apiUrl: "",
@@ -7,14 +20,14 @@ export const cartWishlistReducer = (state, { type, payload }) => {
     },
   };
   switch (type) {
-    case "getCartList":
+    case GET_CART_LIST:
       return {
         ...state,
         apiUrl: "/api/user/cart",
         apiMethod: "get",
         postData: {},
       };
-    case "addItemToCart":
+    case ADD_ITEM_TO_CART:
       return {
         ...state,
         apiUrl: `/api/user/cart`,
@@ -23,16 +36,16 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         toastMessage: `${payload.name} added to cart`,
         toastType: "success",
       };
-    case "removeFromCart":
+    case REMOVE_FROM_CART:
       return {
         ...state,
         apiUrl: `/api/user/cart/${payload._id}`,
         apiMethod: "delete",
-        postData:{},
+        postData: {},
         toastMessage: `${payload.name} removed from cart`,
         toastType: "success",
       };
-    case "changeItemQuantity":
+    case CHANGE_ITEM_QUANTITY:
       const {
         product: { _id, qty },
         action,
@@ -51,21 +64,21 @@ export const cartWishlistReducer = (state, { type, payload }) => {
           action: { type: payload.action },
         },
         toastMessage: `Quantity ${action}ed`,
-        toastType:"success"
+        toastType: "success",
       };
-    case "clearCart":
+    case CLEAR_CART:
       return {
         ...state,
         ...defaultState,
       };
-    case "getWishlist":
+    case GET_WISHLIST:
       return {
         ...state,
         apiUrl: "/api/user/wishlist",
         apiMethod: "get",
-        postData: { },
+        postData: {},
       };
-    case "addToWishlist":
+    case ADD_TO_WISHLIST:
       return {
         ...state,
         apiUrl: `/api/user/wishlist/`,
@@ -76,7 +89,7 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         toastMessage: `${payload.name} added to Wishlist`,
         toastType: "success",
       };
-    case "removeFromWishlist":
+    case REMOVE_FROM_WISHLIST:
       return {
         ...state,
         apiUrl: `/api/user/wishlist/${payload._id}`,
@@ -87,7 +100,7 @@ export const cartWishlistReducer = (state, { type, payload }) => {
         toastMessage: `${payload.name} removed from Wishlist`,
         toastType: "success",
       };
-    case "clearToastMessage":
+    case CLEAR_TOAST_MESSAGE:
       return {
         ...state,
         toastMessage: "",
