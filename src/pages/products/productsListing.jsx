@@ -47,7 +47,7 @@ export function Products() {
         showFilter={showFilter}
         filterToggler={filterToggler}
       />
-      <main className="flex-col pd-md gap-lg">
+      <main className="flex-col pd-md">
         <div>
           <h2 className="txt-center">{category}</h2>
           <p>Showing {productsToDisplay.length} products</p>

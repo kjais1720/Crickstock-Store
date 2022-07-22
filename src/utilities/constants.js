@@ -1,6 +1,13 @@
-export const authDispatchConstants = {
+export const userConstants = {
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  SIGNUP:"SIGNUP",
+  GET_LOGGED_IN_USER:"GET_LOGGED_IN_USER",
+  UPDATE_ADDRESS: "UPDATE_ADDRESS",
+  DELETE_ADDRESS:"DELETE_ADDRESS",
+  CREATE_NEW_ADDRESS:"CREATE_NEW_ADDRESS",
+  CREATE_NEW_ORDER:"CREATE_NEW_ORDER",
+  GET_ALL_ORDERS:"GET_ALL_ORDERS",
 };
 
 export const productsDispatchConstants = {

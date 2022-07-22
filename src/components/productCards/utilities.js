@@ -26,11 +26,11 @@ export const calculateDiscount = (price, prevPrice) =>
  */
 export function CartButton({isAddedToCart, clickHandler, isWishlistCard}) {
   return isAddedToCart && !isWishlistCard ? (
-    <Link className="tr-btn tr-btn-secondary txt-center" to="/cart">
+    <Link className="tr-btn tr-btn-primary txt-center" to="/cart">
       Go to Cart
     </Link>
   ) : (
-    <button onClick={clickHandler} className="tr-btn tr-btn-secondary">
+    <button onClick={clickHandler} className="tr-btn tr-btn-primary">
       <i className="fas fa-cart-arrow-down"></i>
       Add to cart
     </button>

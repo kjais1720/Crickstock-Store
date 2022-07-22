@@ -103,9 +103,9 @@ export function HorizontalProductCard({ product, isCartCard }) {
           <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
         </button>
         <div className="tr-card-header">
-          <a href="../product-info/productId" className="title txt-semibold">
+          <h3 className="title txt-semibold">
             {name}
-          </a>
+          </h3>
           <h3 className="subtitle">{brand}</h3>
         </div>
         <div className="d-flex align-i-center gap-xs">
@@ -149,7 +149,7 @@ export function HorizontalProductCard({ product, isCartCard }) {
           {isCartCard ? (
             <button
               onClick={removeFromCart}
-              className="tr-btn tr-btn-secondary"
+              className="tr-btn tr-btn-error"
             >
               <i className="fas fa-cart-arrow-down"></i>
               Remove from cart
@@ -161,7 +161,6 @@ export function HorizontalProductCard({ product, isCartCard }) {
               isWishlistCard={false}
             />
           )}
-          <button className="tr-btn tr-btn-primary">Buy Now</button>
         </div>
       </div>
     </article>

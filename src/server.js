@@ -2,6 +2,7 @@ import { Server, Model, RestSerializer } from "miragejs";
 import {
   loginHandler,
   signupHandler,
+  getLoggedInUser,
 } from "./backend/controllers/AuthController";
 import {
   addItemToCartHandler,
@@ -22,6 +23,16 @@ import {
   getWishlistItemsHandler,
   removeItemFromWishlistHandler,
 } from "./backend/controllers/WishlistController";
+import {
+  getAddressesHandler,
+  addNewAddressesHandler,
+  removeAddressHandler,
+  updateAddressHandler,
+} from "./backend/controllers/AddressController";
+import {
+  getOrdersHandler,
+  addNewOrderHandler,
+} from "./backend/controllers/OrdersController";
 import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
@@ -38,6 +49,8 @@ export function makeServer({ environment = "development" } = {}) {
       user: Model,
       cart: Model,
       wishlist: Model,
+      addresses: Model,
+      orders: Model,
     },
 
     // Runs on the start of the server
@@ -49,7 +62,13 @@ export function makeServer({ environment = "development" } = {}) {
       });
 
       users.forEach((item) =>
-        server.create("user", { ...item, cart: [], wishlist: [] })
+        server.create("user", {
+          ...item,
+          cart: [],
+          wishlist: [],
+          addresses: item.addresses ?? [],
+          orders: item.orders ?? [],
+        })
       );
 
       categories.forEach((item) => server.create("category", { ...item }));
@@ -57,7 +76,9 @@ export function makeServer({ environment = "development" } = {}) {
 
     routes() {
       this.namespace = "api";
+      this.passthrough(" https://api.razorpay.com/v1/")
       // auth routes (public)
+      this.get("/auth/user", getLoggedInUser.bind(this));
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
 
@@ -85,6 +106,16 @@ export function makeServer({ environment = "development" } = {}) {
         "/user/wishlist/:productId",
         removeItemFromWishlistHandler.bind(this)
       );
+
+      //Address routes
+      this.get("/user/address", getAddressesHandler.bind(this));
+      this.post("/user/address", addNewAddressesHandler.bind(this));
+      this.delete("/user/address/:addressId", removeAddressHandler.bind(this));
+      this.post("/user/address/:addressId", updateAddressHandler.bind(this));
+
+      // Order routes
+      this.get("/user/order", getOrdersHandler.bind(this));
+      this.post("/user/order", addNewOrderHandler.bind(this));
     },
   });
 }

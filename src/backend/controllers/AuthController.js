@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Response } from "miragejs";
-import { formatDate } from "../utils/authUtils";
+import { formatDate, requiresAuth } from "../utils/authUtils";
 import bcrypt from "bcryptjs";
 const jwt = require("jsonwebtoken");
 
@@ -46,7 +46,7 @@ export const signupHandler = function (schema, request) {
       { _id, email },
       process.env.REACT_APP_JWT_SECRET
     );
-    return new Response(201, {}, { user : createdUser, encodedToken });
+    return new Response(201, {}, { user: createdUser, encodedToken });
   } catch (error) {
     return new Response(
       500,
@@ -92,6 +92,22 @@ export const loginHandler = function (schema, request) {
         ],
       }
     );
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+export const getLoggedInUser = function (schema, request) {
+  const userId = requiresAuth.call(this, request);
+  try {
+    const currentUser = schema.users.findBy({ _id: userId });
+    return new Response(200, {}, { user: currentUser });
   } catch (error) {
     return new Response(
       500,
