@@ -49,6 +49,9 @@ h3, h4, h5, h6{
     color: var(--tr-primary-color);
 }
 
+.flex-grow{
+    flex-grow: 1;
+}
 
 .tr-btn-icon i.fas{
     font-weight: 500 ;
@@ -57,7 +60,6 @@ h3, h4, h5, h6{
 .tr-btn-icon i.icon-filled{
     font-weight: 900;
 }
-
 
 .logo{
     width: clamp(12rem, 20vw, 20rem);
@@ -78,6 +80,14 @@ h3, h4, h5, h6{
 
 .min-height-100{
     min-height: 100vh;
+}
+
+.ml-auto{
+    margin-left: auto;
+}
+
+.mt-auto{
+    margin-top: auto;
 }
 
 .tr-card{

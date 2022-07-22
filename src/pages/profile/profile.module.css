@@ -1,0 +1,22 @@
+.profilePage{
+  min-height: 90vh;
+}
+
+.profileSidebar{
+  min-width: 15rem;
+  position: relative;
+  transition: all ease 0.5s;
+}
+
+.profileHeader{
+  padding: var(--space-sm);
+  background: var(--tr-primary-color);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+@media screen and (max-width: 720px) {
+  .profileSidebar{
+    right: 100%;
+    display: none;
+  }
+}

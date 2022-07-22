@@ -25,8 +25,8 @@ export function FormComponent({ formType }) {
     confirmPassword: "",
   };
   const guestCredentials = {
-    email: "adarshbalika@gmail.com",
-    password: "adarshBalika@123",
+    email: "johndoe@gmail.com",
+    password: "johnDoe@123",
   };
 
 

@@ -1,0 +1,20 @@
+.orderTable{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: var(--space-xs);
+  box-shadow: var(--bs-lighter);
+  
+}
+
+.productCard{
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  box-shadow: var(--bs-lighter);
+}
+
+.productImage{
+  object-fit: contain;
+  height: 100%;
+}

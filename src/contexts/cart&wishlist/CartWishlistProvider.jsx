@@ -21,7 +21,6 @@ const { CLEAR_TOAST_MESSAGE } = cartWishlistDispatchConstants;
 const cartWishlistContext = createContext({
   cartItems: [],
   wishlistItems:[],
-  setCartItems: () => {},
 });
 
 const getData = (apiRoute) => {
@@ -89,8 +88,9 @@ export const CartWishlistProvider = ({ children }) => {
   }, [isUserAuthenticated]);
 
   useEffect(()=>{
-    if(serverError.error){
+    if(serverError.response?.status===500){
       toast.error("An Error occured, please retry.")
+      cartWishlistDispatch({type:CLEAR_TOAST_MESSAGE})
     }
     else if(cartWishlistState.toastMessage && !isLoading){
       toast[cartWishlistState.toastType](cartWishlistState.toastMessage);

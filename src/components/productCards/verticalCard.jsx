@@ -33,7 +33,7 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
   const itemInCart = cartItems.find((item) => item._id === id);
   const itemInWishlist = wishlistItems.find((item) => item._id === id);
   const addedToCart = itemInCart ? true : false;
-  const addedToWishlist = itemInWishlist ? true : false;
+  const isAddedToWishlist = itemInWishlist ? true : false;
 
   const addToCart = () => {
     if (isUserAuthenticated) {
@@ -52,9 +52,9 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
     }
   };
 
-  const addToWishlist = (addedToWishlist, product) => {
+  const addToWishlist = (isAddedToWishlist, product) => {
     if (isUserAuthenticated) {
-      if (addedToWishlist) {
+      if (isAddedToWishlist) {
         cartWishlistDispatch({
           type: REMOVE_FROM_WISHLIST,
           payload: product,
@@ -73,9 +73,9 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
       {badgeText ? <ProductBadge badgeText={badgeText} /> : ""}
       <button
         className="heart-icon tr-btn tr-btn-icon"
-        onClick={() => addToWishlist(addedToWishlist, product)}
+        onClick={() => addToWishlist(isAddedToWishlist, product)}
       >
-        <i className={`fas fa-heart ${addedToWishlist && "icon-filled"}`}></i>
+        <i className={`fas fa-heart ${isAddedToWishlist && "icon-filled"}`}></i>
       </button>
       <div className="tr-card-banner">
         <img
@@ -89,9 +89,9 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
         />
       </div>
       <div className="tr-card-header">
-        <a href="../product-info/productId" className="title txt-semibold">
+        <h4 className="title txt-semibold">
           {name}
-        </a>
+        </h4>
         <h3 className="subtitle txt-gray">{brand}</h3>
       </div>
       <div className="d-flex align-i-center">
@@ -120,10 +120,6 @@ export const VerticalProductCard = ({ product, isWishlistCard }) => {
             clickHandler={addToCart}
             isWishlistCard={isWishlistCard}
           />
-          <button className="tr-btn tr-btn-primary">
-            <i className="fas fa-bags-shopping"></i>
-            Buy Now
-          </button>
         </div>
         : 
         <div className="tr-card-footer-links flex-col gap-sm">

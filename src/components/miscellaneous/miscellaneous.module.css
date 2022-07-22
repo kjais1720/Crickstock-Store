@@ -38,3 +38,21 @@
 .pageMenu a:focus{
     color: var(--tr-accent-color);
 }
+
+.accordion{
+    box-shadow: var(--bs-lighter);
+}
+
+.accordionContent{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height ease 0.3s;
+}
+
+.accordionHeader{
+    cursor: pointer;
+}
+
+.activeAccordian{
+    max-height: 100vh;
+}
