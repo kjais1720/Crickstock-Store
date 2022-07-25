@@ -69,7 +69,9 @@ export const cartWishlistReducer = (state, { type, payload }) => {
     case CLEAR_CART:
       return {
         ...state,
-        ...defaultState,
+        apiUrl: "/api/user/cart",
+        apiMethod:"delete",
+        toastMessage:"",
       };
     case GET_WISHLIST:
       return {

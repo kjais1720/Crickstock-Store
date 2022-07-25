@@ -1,6 +1,6 @@
 import styles from './empty-message.module.css'
 import { Link } from "react-router-dom";
-export function EmptyPageMessage({pageName}){
+export default function EmptyPageMessage({pageName}){
   return (
     <div className="flex-center pd-y-xlg">
       <div

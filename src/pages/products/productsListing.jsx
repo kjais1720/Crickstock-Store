@@ -7,7 +7,7 @@ import { productsDispatchConstants } from "utilities";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export function Products() {
+export default function Products() {
   document.title = "Products | Crickstock";
 
   const [showFilter, setShowFilter] = useState(false);

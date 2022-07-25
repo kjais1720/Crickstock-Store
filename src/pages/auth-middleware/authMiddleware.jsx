@@ -3,7 +3,7 @@ import { useAuth } from "contexts";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 
-export function AuthMiddleware() {
+export default function AuthMiddleware() {
   const {
     userState: { isUserAuthenticated },
   } = useAuth();
