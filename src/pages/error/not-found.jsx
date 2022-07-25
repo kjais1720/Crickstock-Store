@@ -1,4 +1,4 @@
-export function NotFound() {
+export default function NotFound() {
   return (
     <main className="page flex-center min-height-100">
       <div className="w-80 txt-center">

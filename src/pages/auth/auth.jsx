@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormComponent } from "./components/FormComponent";
-
-export function Auth() {
+import { useNavigate } from "react-router";
+import { useAuth } from "contexts";
+export default function Auth() {
   const [formToShow, setFormToShow] = useState("login");
+  const navigate = useNavigate();
+  const { userState : {isUserAuthenticated }} = useAuth();
+  useEffect(()=>{
+    if(isUserAuthenticated) navigate("/");
+  },[isUserAuthenticated])
   return (
     <div className="auth-form-container tr-card tr-card-hor d-flex mr-y-xxlg">
       <div className="tr-card-banner">

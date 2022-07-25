@@ -9,7 +9,6 @@ const { USER_TOKEN } = localStorageConstants;
 /**
  * @param apiUrl : api url string 
  * @returns {isLoading : loading state, data : data from server, serverError : Error from server, setData : changing the state of data }
- * .Since it is dependent on the apiUrl and postData, anytime these state change, a new api call will be made to the server with the new url and postData
  */
 export const useAxios = (apiUrl, method = "get", postData) => {
     const [ apiState, setApiState ] = useState({
@@ -58,7 +57,7 @@ export const useAxios = (apiUrl, method = "get", postData) => {
         if(apiUrl){
             getData()
         }
-    }, [apiUrl,postData]);
+    }, [apiUrl,postData, method]);
     return {
         isLoading:apiState.isLoading,
         serverResponse:apiState.serverResponse,

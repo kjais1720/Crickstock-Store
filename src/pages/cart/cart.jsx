@@ -1,8 +1,8 @@
 import { useCartWishlist } from "contexts";
 import { HorizontalProductCard } from "components";
-import { EmptyPageMessage } from "../empty-page-message/empty-page-message";
+import EmptyPageMessage from "../empty-page-message/empty-page-message";
 import { Link } from "react-router-dom";
-export function Cart() {
+export default function Cart() {
   document.title = "My Cart | Crickstock";
   const { cartItems, cartTotalEstimate } = useCartWishlist();
   const { price, discount, totalPrice, totalItems } = cartTotalEstimate;

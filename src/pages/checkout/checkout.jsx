@@ -4,27 +4,25 @@ import { useCartWishlist, useAuth } from "contexts";
 import { AddressCard } from "components/address/addressCard";
 import { toast } from "react-toastify";
 import { loadScript } from "utilities";
-import { Link } from "react-router-dom";
-export function Checkout() {
+import { Link, useNavigate } from "react-router-dom";
+export default function Checkout() {
   const {
     userState: {
       user: { addresses },
     },
     createOrder,
   } = useAuth();
-  const [ selectedAddress, setSelectedAddress ] = useState(() => addresses[0] ? {...addresses[0]} : null)
-  const { cartItems, cartTotalEstimate } = useCartWishlist();
+  const [selectedAddress, setSelectedAddress] = useState(() =>
+    addresses[0] ? { ...addresses[0] } : null
+  );
+  const { cartItems, cartTotalEstimate, clearCart } = useCartWishlist();
   const { price, discount, totalPrice, totalItems } = cartTotalEstimate;
-  
-  const changeSelectedAddress = (address) => setSelectedAddress({...address}); 
-  const confirmOrder = () => {
-    if(!selectedAddress){
-      toast.error("Please select an address to confirm your order")
-    }
-  }
+  const navigate = useNavigate();
+
+  const changeSelectedAddress = (address) => setSelectedAddress({ ...address });
   const handlePayment = async () => {
-    if(!selectedAddress){
-      toast.error("Please select an address to confirm your order")
+    if (!selectedAddress) {
+      toast.error("Please select an address to confirm your order");
       return;
     }
     const res = await loadScript(
@@ -32,10 +30,7 @@ export function Checkout() {
     );
 
     if (!res) {
-      Toast({
-        type: "error",
-        message: "Failed to initiate payment, please try again.",
-      });
+      toast.error("Failed to initiate payment, please try again.");
     }
 
     const options = {
@@ -47,15 +42,18 @@ export function Checkout() {
       handler: function (response) {
         const order = {
           paymentId: response?.razorpay_payment_id,
-          totalPrice,
+          totalPrice: totalPrice+100,
           orderedProducts: [...cartItems],
-          deliveryAddress: {...selectedAddress},
+          deliveryAddress: { ...selectedAddress },
         };
-        createOrder(order)
+        createOrder(order);
+        clearCart();
+        toast.success("Yay! Order confirmed 🥳");
+        navigate("/user/profile/orders");
       },
       prefill: {
-        name: "Gaurav Kumar",
-        email: "gaurav.kumar@example.com",
+        name: "Krituraj Anand",
+        email: "krituraj.anand@example.com",
         contact: "9999999999",
       },
       theme: {
@@ -73,23 +71,33 @@ export function Checkout() {
         <aside className="flex-col">
           <h3 className="txt-semibold txt-md txt-center">Select an Address</h3>
           <hr />
-          {addresses.length >0 ? addresses.map((address, idx) => {
-            return (
-              <div className="d-flex">
-                <input onChange={()=>changeSelectedAddress(address)} checked={selectedAddress._id === address._id} type="radio" id={"address"+address._id} />
-                <label htmlFor={"address"+address._id}>
-                  <AddressCard address={address} />
-                </label>
-              </div>
-            );
-          }) : 
-          <div className="flex-col align-i-center">
-            <p>Please add an address to proceed!</p>
-            <Link className="tr-btn tr-btn-primary" to="/user/profile/addresses">
-              Add New Address
-            </Link>
-          </div>
-          }
+          {addresses.length > 0 ? (
+            addresses.map((address, idx) => {
+              return (
+                <div className="d-flex">
+                  <input
+                    onChange={() => changeSelectedAddress(address)}
+                    checked={selectedAddress._id === address._id}
+                    type="radio"
+                    id={"address" + address._id}
+                  />
+                  <label htmlFor={"address" + address._id}>
+                    <AddressCard address={address} />
+                  </label>
+                </div>
+              );
+            })
+          ) : (
+            <div className="flex-col align-i-center">
+              <p>Please add an address to proceed!</p>
+              <Link
+                className="tr-btn tr-btn-primary"
+                to="/user/profile/addresses"
+              >
+                Add New Address
+              </Link>
+            </div>
+          )}
         </aside>
         <aside className="flex-col flex-grow">
           <h3 className="txt-semibold txt-md txt-center">Order Summary</h3>
@@ -107,19 +115,17 @@ export function Checkout() {
                         alt={name}
                       />
                     </figure>
-                    {/* <div className="flex-col justify-c-space-between"> */}
-                      <div>
-                        <h3 className="txt-primary">{name}</h3>
-                        <h4>{brand}</h4>
-                      </div>
-                      <h3 className="ml-auto">₹{price}</h3>
-                    {/* </div> */}
+                    <div>
+                      <h3 className="txt-primary">{name}</h3>
+                      <h4>{brand}</h4>
+                    </div>
+                    <h3 className="ml-auto">₹{price}</h3>
                   </article>
                 );
               })}
             </div>
           </div>
-            <h3>Price details</h3>
+          <h3>Price details</h3>
           <aside className="flex-col gap-md bs-lighter w-100 pd-sm">
             <div className="flex-col">
               <div className="d-flex justify-c-space-between">

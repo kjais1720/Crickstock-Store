@@ -13,3 +13,4 @@ export { Accordion } from "./miscellaneous/accordion";
 export { AddressCard } from "./address/addressCard";
 export { AddressForm } from "./address/addressForm";
 export { OrderCard } from "./orderCard/orderCard";
+export { ScrollToTop } from "./scrollToTop/scrollToTop";

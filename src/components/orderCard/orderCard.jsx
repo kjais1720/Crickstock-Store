@@ -30,6 +30,9 @@ export function OrderCard({ orderedProducts, deliveryAddress, createdAt, totalPr
               </article>
             );
           })}
+          <div className="txt-right">
+            Total Bill : {totalPrice}
+          </div>
         </div>
       </div>
       <div className="flex-col">

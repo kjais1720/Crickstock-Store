@@ -1,7 +1,7 @@
 import { useAuth } from "contexts";
 import { Outlet, NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
-export function Profile() {
+export default function Profile() {
   const { userState : {user}, logout } = useAuth();
   const firstName = user?.firstName;
   const lastName = user?.lastName;
