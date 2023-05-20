@@ -54,8 +54,8 @@ export function Checkout() {
         createOrder(order)
       },
       prefill: {
-        name: "Gaurav Kumar",
-        email: "gaurav.kumar@example.com",
+        name: "John Doe",
+        email: "john.doe@example.com",
         contact: "9999999999",
       },
       theme: {
